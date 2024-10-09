@@ -24,12 +24,12 @@
     ],
     "homepage": "https://github.com/ghostwriter/handrail",
     "support": {
-        "issues": "https://github.com/ghostwriter/handrail/issues",
-        "forum": "https://github.com/ghostwriter/handrail/discussions",
-        "source": "https://github.com/ghostwriter/handrail",
         "docs": "https://github.com/ghostwriter/handrail",
+        "forum": "https://github.com/ghostwriter/handrail/discussions",
+        "issues": "https://github.com/ghostwriter/handrail/issues",
         "rss": "https://github.com/ghostwriter/handrail/releases.atom",
-        "security": "https://github.com/ghostwriter/handrail/security/advisories/new"
+        "security": "https://github.com/ghostwriter/handrail/security/advisories/new",
+        "source": "https://github.com/ghostwriter/handrail"
     },
     "funding": [
         {
@@ -39,13 +39,19 @@
     ],
     "_comment": "#BlackLivesMatter",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "ext-tokenizer": "*",
-        "composer-plugin-api": "^2.6.0"
+        "composer-plugin-api": "^2.6.0",
+        "composer-runtime-api": "^2.2.2",
+        "ghostwriter/container": "^4.0.3",
+        "ghostwriter/event-dispatcher": "^5.0.2",
+        "ghostwriter/filesystem": "^0.1.0"
     },
     "require-dev": {
         "composer/composer": "^2.8.1",
-        "ghostwriter/coding-standard": "dev-main"
+        "ghostwriter/coding-standard": "dev-main",
+        "symfony/var-dumper": "^7.1",
+        "vimeo/psalm": "dev-master"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -67,18 +73,28 @@
         "classmap-authoritative": false,
         "discard-changes": true,
         "optimize-autoloader": true,
-        "platform": {
-            "php": "8.2.999"
-        },
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
         "sort-packages": true,
-        "use-parent-dir": false
+        "use-parent-dir": false,
+        "platform": {
+            "php": "8.3.999"
+        }
     },
     "extra": {
         "class": "Ghostwriter\\Handrail\\Plugin",
-        "plugin-optional": false
+        "plugin-optional": false,
+        "ghostwriter/handrail": {
+            "disable": false,
+            "include": [
+                "vendor/amphp/*/"
+            ],
+            "exclude": [
+                "src",
+                "tests"
+            ]
+        }
     },
     "scripts": {
         "bin_ecs": "ecs check --clear-cache --no-interaction",
