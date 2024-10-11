@@ -9,13 +9,9 @@
 [![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/handrail)](https://packagist.org/packages/ghostwriter/handrail)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/handrail?color=blue)](https://packagist.org/packages/ghostwriter/handrail)
 
-> [!WARNING]
->
-> This project is not finished yet, please do not use it in production.
-
 Safeguard your PHP code by wrapping function declarations in `if (!function_exists())` blocks.
 
-This ensures that functions are only declared if they do not already exist, preventing redeclaration conflicts.
+Ensures that functions are only declared if they do not already exist, preventing redeclaration conflicts.
 
 ### Star ⭐️ this repo if you find it useful
 
@@ -29,53 +25,7 @@ You can install the package via composer:
 composer require ghostwriter/handrail
 ```
 
-### Configuration
-
-To configure the paths or files to scan, create a composer `extra` configuration in your `composer.json`:
-
-```json
-{
-    "extra": {
-        "ghostwriter/handrail": {
-            "disable": true, # Optional - Default: false
-            "include": [
-                "tests/Fixture/Exclude/includeFile.php",
-                "tests/Fixture/Include/"
-            ],
-            "exclude": [
-                "tests/Fixture/Exclude/",
-                "tests/Fixture/Include/excludeFile.php"
-            ]
-        }
-    }
-}
-```
-
-- **`disable`**: (default: `false`) A boolean flag to enable or disable Handrail.
-- **`exclude`**: (default: `[]`) An array of directories or files to exclude from the scan.
-- **`include`**: (default: `[]`) An array of directories or files to include in the scan.
-
-
-
-## Usage
-
-Handrail automatically hooks into Composer’s lifecycle events (`post-install-cmd` and `post-update-cmd`).
-
-- **Once installed, it will scan all PHP files autoloaded via composer and wrap function declarations as necessary.**
-
-
-## How It Works
-
-1. **Tokenization**  
-   Handrail tokenizes each PHP file using `PhpToken::tokenize()` to parse the code structure accurately and identify all function declarations.
-
-2. **Function Existence Check**  
-   It looks for existing `if (!function_exists())` checks before each function. If none is found, it wraps the function declaration automatically.
-
-3. **File Modification**  
-   The modified file is written back, ensuring your codebase stays safe from redeclaration conflicts.
-
-### Example #1
+### Example
 
 Before running Handrail:
 
@@ -89,7 +39,6 @@ function exampleFunction() {
 function anotherFunction() {
     // more code
 }
-
 ```
 
 After running Handrail:
@@ -108,7 +57,54 @@ if (!function_exists('anotherFunction')) {
         // more code
     }
 }
+```
 
+### Configuration
+
+To configure the paths or files to scan, create a composer `extra` configuration in your `composer.json`:
+
+```json
+{
+    "extra": {
+        "ghostwriter/handrail": {
+            "disable": false,
+            "files": [
+                "vendor/amphp/amp/src/Future/functions.php",
+                "vendor/amphp/amp/src/Internal/functions.php",
+                "vendor/amphp/amp/src/functions.php",
+                "vendor/amphp/byte-stream/src/Internal/functions.php",
+                "vendor/amphp/byte-stream/src/functions.php",
+                "vendor/amphp/serialization/src/functions.php",
+                "vendor/amphp/sync/src/functions.php"
+            ]
+        }
+    }
+}
+```
+
+- **`disable`**: (default: `false`) A boolean flag to enable or disable Handrail.
+- **`files`**: (default: `[]`) An array of files to scan for function declarations.
+
+## Usage
+
+### Automatic Execution
+
+After installing and configuring Handrail, we will automatically hook into Composer’s lifecycle events (`post-install-cmd` and `post-update-cmd`) after Composer installs or updates packages.
+
+```bash
+composer install
+```
+
+```bash
+composer update
+```
+
+### Manual Execution
+
+You can also run Handrail manually using the following Composer command:
+
+```bash
+composer handrail
 ```
 
 ## Advanced Usage
@@ -120,27 +116,9 @@ Handrail provides an API for programmatic execution within PHP scripts:
 ```php
 use Ghostwriter\Handrail\Handrail;
 
-$includePaths = [
-    'tests/Fixture/Exclude/includeFile.php',
-    '/path/to/directory/Include/',
-];
-
-$excludePaths = [  
-    'vendor/Exclude/',
-    'tests/Fixture/Exclude/',
-    'tests/Fixture/Include/excludeFile.php',
-];
-
-Handrail::new($includePaths, $excludePaths)->guard($fileOrDirectory);
+Handrail::new()->guard($phpFile);
 ```
 
-### Manual Execution
-
-You can also run Handrail manually using the following Composer command:
-
-```bash
-composer handrail
-```
 
 ### Credits
 
