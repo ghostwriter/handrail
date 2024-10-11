@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\Handrail;
+namespace Ghostwriter\Handrail\Value;
 
 use Throwable;
 
