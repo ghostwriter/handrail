@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\Handrail\File;
+namespace Ghostwriter\Handrail\Value\File;
 
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
 use Ghostwriter\Handrail\Modifier\ModifierInterface;
-use Ghostwriter\Handrail\PathInterface;
+use Ghostwriter\Handrail\Value\PathInterface;
 use Override;
 use Throwable;
 
-final readonly class IncludedFile implements IncludedFileInterface
+final readonly class ModifiedFile implements ModifiedFileInterface
 {
-    /**
-     * @param non-empty-string $path
-     */
     public function __construct(
         private PathInterface $path,
         private string $code,
@@ -42,14 +39,6 @@ final readonly class IncludedFile implements IncludedFileInterface
         return $this->code;
     }
 
-    #[Override]
-    public function delete(FilesystemInterface $filesystem): DeletedFileInterface
-    {
-        $filesystem->delete($this->path);
-
-        return DeletedFile::new($this->path);
-    }
-
     /**
      * @throws Throwable
      */
@@ -63,5 +52,13 @@ final readonly class IncludedFile implements IncludedFileInterface
     public function path(): PathInterface
     {
         return $this->path;
+    }
+
+    #[Override]
+    public function save(FilesystemInterface $filesystem): OriginalFileInterface
+    {
+        $filesystem->write($this->path->__toString(), $this->code);
+
+        return OriginalFile::new($this->path, $this->code);
     }
 }
