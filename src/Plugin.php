@@ -73,6 +73,9 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
         return self::CAPABILITIES;
     }
 
+    /**
+     * @throws Throwable
+     */
     #[Override]
     public function getCommands()
     {
@@ -81,11 +84,17 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
         return $commands ??= [$this->container->get(HandrailCommand::class)];
     }
 
+    /**
+     * @throws Throwable
+     */
     public function postInstall(Event $event): void
     {
         $this->eventDispatcher->dispatch(new ComposerPostInstall($event));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function postUpdate(Event $event): void
     {
         $this->eventDispatcher->dispatch(new ComposerPostUpdate($event));
