@@ -50,9 +50,7 @@
         "ghostwriter/json": "^3.0.0"
     },
     "require-dev": {
-        "ghostwriter/coding-standard": "dev-main",
-        "symfony/var-dumper": "^7.1.5",
-        "vimeo/psalm": "dev-master"
+        "ghostwriter/coding-standard": "dev-main"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
