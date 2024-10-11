@@ -17,6 +17,19 @@ final readonly class InputOutput
     ) {
     }
 
+    public function catch(Throwable $throwable): void
+    {
+        $this->symfonyStyle->warning(
+            \sprintf(
+                '[%s]: %s %s%s',
+                Handrail::PACKAGE_NAME,
+                \mb_substr(\mb_strrchr($throwable::class, '\\'), 1) . ' was thrown:',
+                PHP_EOL,
+                $throwable->getMessage(),
+            )
+        );
+    }
+
     public function error(string $message): void
     {
         $this->symfonyStyle->error(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
@@ -35,19 +48,6 @@ final readonly class InputOutput
     public function success(string $message): void
     {
         $this->symfonyStyle->success(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
-    }
-
-    public function catch(Throwable $throwable): void
-    {
-        $this->symfonyStyle->warning(
-            \sprintf(
-                '[%s]: %s %s%s',
-                Handrail::PACKAGE_NAME,
-                \mb_substr(\mb_strrchr($throwable::class, '\\'), 1) . ' was thrown:',
-                PHP_EOL,
-                $throwable->getMessage(),
-            )
-        );
     }
 
     public function title(string $message): void
