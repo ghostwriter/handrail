@@ -83,18 +83,6 @@
     },
     "extra": {
         "class": "Ghostwriter\\Handrail\\Plugin",
-        "ghostwriter/handrail": {
-            "disable": false,
-            "files": [
-                "vendor/amphp/amp/src/Future/functions.php",
-                "vendor/amphp/amp/src/Internal/functions.php",
-                "vendor/amphp/amp/src/functions.php",
-                "vendor/amphp/byte-stream/src/Internal/functions.php",
-                "vendor/amphp/byte-stream/src/functions.php",
-                "vendor/amphp/serialization/src/functions.php",
-                "vendor/amphp/sync/src/functions.php"
-            ]
-        },
         "plugin-optional": false
     },
     "scripts": {
