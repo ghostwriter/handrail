@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Handrail\EventDispatcher\Listener;
 
+use Composer\Console\Application;
 use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPostInstall;
+use Symfony\Component\Console\Input\ArrayInput;
 
-use const PHP_EOL;
-use const STDOUT;
-
-final class ComposerPostInstallListener
+final readonly class ComposerPostInstallListener
 {
-    public function __invoke(ComposerPostInstall $event): void
+    public function __construct(
+        private Application $application
+    ) {
+    }
+
+    public function __invoke(ComposerPostInstall $composerPostInstall): void
     {
-        $eventName = \mb_substr(\mb_strrchr($event::class, '\\'), 1);
-        $listenerName = \mb_substr(\mb_strrchr(self::class, '\\'), 1);
-
-        \fwrite(STDOUT, $listenerName . ' - ' . $eventName . PHP_EOL);
-
-        $event->getIO()
-            ->write('Composer post install event' . PHP_EOL);
+        $this->application->run(new ArrayInput([
+            'command' => 'handrail',
+        ]));
     }
 }
