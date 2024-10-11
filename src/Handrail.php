@@ -41,6 +41,9 @@ final readonly class Handrail implements HandrailInterface
     ) {
     }
 
+    /**
+     * @throws Throwable
+     */
     public static function new(): self
     {
         $container = Container::getInstance();
