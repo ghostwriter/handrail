@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@03ee02ce6b43d1c7e52b9bb3ea0b49bfd02b08d0">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Console/Command/HandrailCommand.php">
     <MissingThrowsDocblock>
       <code><![CDATA[parent::__construct()]]></code>
@@ -101,6 +101,9 @@
     <MixedAssignment>
       <code><![CDATA[$commands]]></code>
     </MixedAssignment>
+    <MixedInferredReturnType>
+      <code><![CDATA[getCommands]]></code>
+    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$commands ??= [$this->container->get(HandrailCommand::class)]]]></code>
       <code><![CDATA[$commands ??= [$this->container->get(HandrailCommand::class)]]]></code>
@@ -163,9 +166,6 @@
     </UnusedParam>
   </file>
   <file src="tests/Unit/AbstractTestCase.php">
-    <PossiblyFalseArgument>
-      <code><![CDATA[\mb_strrchr(static::class, '\\')]]></code>
-    </PossiblyFalseArgument>
     <PossiblyNullArgument>
       <code><![CDATA[self::$temporaryDirectory]]></code>
     </PossiblyNullArgument>
