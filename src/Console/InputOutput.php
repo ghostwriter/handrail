@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Handrail\Console;
 
+use Ghostwriter\Handrail\Handrail;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class InputOutput
+final readonly class InputOutput
 {
     public function __construct(
         private SymfonyStyle $symfonyStyle
@@ -15,7 +16,7 @@ final class InputOutput
 
     public function error(string $message): void
     {
-        $this->symfonyStyle->error(\sprintf('[%s]: %s', 'ghostwriter/handrail', $message));
+        $this->symfonyStyle->error(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
     public function iterate(iterable $iterables): iterable
@@ -25,7 +26,7 @@ final class InputOutput
 
     public function success(string $message): void
     {
-        $this->symfonyStyle->success(\sprintf('[%s]: %s', 'ghostwriter/handrail', $message));
+        $this->symfonyStyle->success(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
     public function title(string $message): void
@@ -35,6 +36,6 @@ final class InputOutput
 
     public function warning(string $message): void
     {
-        $this->symfonyStyle->warning(\sprintf('[%s]: %s', 'ghostwriter/handrail', $message));
+        $this->symfonyStyle->warning(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 }
