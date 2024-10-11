@@ -9,7 +9,6 @@ use Composer\InstalledVersions;
 use Composer\Package\PackageInterface;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
 use Ghostwriter\Handrail\Console\InputOutput;
-use Ghostwriter\Handrail\Exception\ShouldNotHappenException;
 use Ghostwriter\Handrail\Handrail;
 use Ghostwriter\Handrail\HandrailInterface;
 use Ghostwriter\Json\Interface\JsonInterface;
@@ -33,6 +32,9 @@ final class HandrailCommand extends BaseCommand
         ],
     ];
 
+    /**
+     * @throws Throwable
+     */
     public function __construct(
         private readonly HandrailInterface $handrail,
         private readonly InputOutput $inputOutput,
@@ -73,10 +75,11 @@ final class HandrailCommand extends BaseCommand
         $extra = $rootPackage->getExtra();
 
         if (! \array_key_exists(Handrail::PACKAGE_NAME, $extra)) {
+            /** @var array{ghostwriter/handrail: array{disable: bool, files: list<string>, packages: list<string>}} $extra */
             $extra = self::DEFAULT_COMPOSER_EXTRA[Handrail::EXTRA];
         }
 
-        /** @var array{disable: ?bool, files: ?list<string>} $config */
+        /** @var array{disable: ?bool, files: ?list<string>, packages: ?list<string>} $config */
         $config = $extra[Handrail::PACKAGE_NAME];
 
         $disable = $config[Handrail::OPTION_DISABLE] ?? false;
