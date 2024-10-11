@@ -2,18 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\Handrail\Paths;
+namespace Ghostwriter\Handrail\Value;
 
 use Ghostwriter\Filesystem\Filesystem;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
-use Ghostwriter\Handrail\File\IncludedFile;
-use Ghostwriter\Handrail\File\IncludedFileInterface;
-use Ghostwriter\Handrail\FileInterface;
-use Ghostwriter\Handrail\Path;
-use Ghostwriter\Handrail\PathInterface;
+use Ghostwriter\Handrail\Value\File\OriginalFile;
+use Ghostwriter\Handrail\Value\File\OriginalFileInterface;
 use WeakMap;
 
-final class IncludePaths
+final readonly class Paths
 {
     /**
      * @var WeakMap<PathInterface,FileInterface>
@@ -34,13 +31,13 @@ final class IncludePaths
         $this->weakMap = $weakMap;
     }
 
-    public static function new(FilesystemInterface $filesystem, string ...$paths): self
+    public static function new(FilesystemInterface $filesystem, string ...$files): self
     {
         return new self(
             $filesystem,
             ...\array_map(
-                static fn (string $path): IncludedFileInterface
-                    => IncludedFile::new(Path::new($path), Filesystem::new()->read($path)),
+                static fn (string $path): OriginalFileInterface
+                    => OriginalFile::new(Path::new($path), Filesystem::new()->read($path)),
                 $paths
             )
         );
@@ -48,7 +45,7 @@ final class IncludePaths
 
     public function add(PathInterface $path): void
     {
-        $this->weakMap->offsetSet($path, IncludedFile::new($path, $this->filesystem->read((string) $path)));
+        $this->weakMap->offsetSet($path, OriginalFile::new($path, $this->filesystem->read($path->__toString())));
     }
 
     public function contains(PathInterface $path): bool
