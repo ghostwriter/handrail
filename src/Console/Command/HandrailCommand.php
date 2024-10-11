@@ -118,7 +118,7 @@ final class HandrailCommand extends BaseCommand
             return 0;
         }
 
-        $workspace = $this->filesystem->currentWorkingDirectory();
+        $workspace = $this->filesystem->currentWorkingDirectory() . DIRECTORY_SEPARATOR;
 
         foreach ($files as $file) {
             if (! \is_string($file)) {
@@ -133,7 +133,7 @@ final class HandrailCommand extends BaseCommand
                 return 1;
             }
 
-            $fullPath = $workspace . DIRECTORY_SEPARATOR . $file;
+            $fullPath = $workspace . $file;
 
             if (! \str_ends_with($fullPath, '.php')) {
                 $this->inputOutput->warning('Invalid PHP file: ' . $fullPath);
@@ -141,7 +141,7 @@ final class HandrailCommand extends BaseCommand
                 continue;
             }
 
-            $this->inputOutput->success('Processing: ' . $file);
+            $this->inputOutput->info('Processing: ' . $file);
 
             if (! \str_contains($fullPath, \sprintf('%svendor%s', DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR))) {
                 $this->inputOutput->error('Invalid vendor directory: ' . $fullPath);
@@ -149,7 +149,14 @@ final class HandrailCommand extends BaseCommand
                 continue;
             }
 
-            $this->handrail->guard($fullPath);
+            try {
+                $this->handrail->guard($fullPath);
+
+                $this->inputOutput->success('Processed: ' . $file);
+            } catch (Throwable $exception) {
+                $this->inputOutput->throw($exception);
+            }
+
         }
 
         return 0;
