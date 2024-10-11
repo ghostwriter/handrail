@@ -6,8 +6,10 @@ namespace Ghostwriter\Handrail\Console\Command;
 
 use Composer\Command\BaseCommand;
 use Composer\InstalledVersions;
+use Composer\Package\PackageInterface;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
 use Ghostwriter\Handrail\Console\InputOutput;
+use Ghostwriter\Handrail\Exception\ShouldNotHappenException;
 use Ghostwriter\Handrail\Handrail;
 use Ghostwriter\Handrail\HandrailInterface;
 use Ghostwriter\Json\Interface\JsonInterface;
@@ -26,6 +28,7 @@ final class HandrailCommand extends BaseCommand
             Handrail::PACKAGE_NAME => [
                 Handrail::OPTION_DISABLE => false,
                 Handrail::OPTION_FILES => [],
+                Handrail::OPTION_PACKAGES => [],
             ],
         ],
     ];
@@ -63,19 +66,14 @@ final class HandrailCommand extends BaseCommand
             )
         );
 
-        $extra = $this->requireComposer()
-            ->getPackage()
-            ->getExtra();
+        $composer = $this->requireComposer();
+
+        $rootPackage = $composer->getPackage();
+
+        $extra = $rootPackage->getExtra();
 
         if (! \array_key_exists(Handrail::PACKAGE_NAME, $extra)) {
-            $this->inputOutput->error(
-                \sprintf(
-                    'Handrail is not configured, add the following configuration to your composer.json file.%s',
-                    PHP_EOL . $this->json->encode(self::DEFAULT_COMPOSER_EXTRA, true),
-                )
-            );
-
-            return 1;
+            $extra = self::DEFAULT_COMPOSER_EXTRA[Handrail::EXTRA];
         }
 
         /** @var array{disable: ?bool, files: ?list<string>} $config */
@@ -110,6 +108,37 @@ final class HandrailCommand extends BaseCommand
             ));
 
             return 1;
+        }
+
+        /** @var ?list<?string> $packages */
+        $packages = $config[Handrail::OPTION_PACKAGES] ?? [];
+        if (! \is_array($packages)) {
+            $this->inputOutput->error(\sprintf(
+                'Invalid `packages` configuration; expected an "array" but "%s" provided.%s',
+                \get_debug_type($packages),
+                PHP_EOL . $this->json->encode($config, true),
+            ));
+
+            return 1;
+        }
+
+        $installedRepository = $composer
+            ->getRepositoryManager()
+            ->getLocalRepository();
+
+        foreach ($packages as $name) {
+            $package = $installedRepository->findPackage($name, '*');
+            if (! $package instanceof PackageInterface) {
+                $this->inputOutput->warning('Package not installed: ' . $name);
+
+                continue;
+            }
+
+            $this->inputOutput->info('Processing package: ' . $name);
+
+            foreach ($package->getAutoload()['files'] ?? [] as $filePath) {
+                $files[] = \sprintf('vendor%s%s%s%s', DIRECTORY_SEPARATOR, $name, DIRECTORY_SEPARATOR, $filePath);
+            }
         }
 
         if ($files === []) {
@@ -154,7 +183,7 @@ final class HandrailCommand extends BaseCommand
 
                 $this->inputOutput->success('Processed: ' . $file);
             } catch (Throwable $exception) {
-                $this->inputOutput->throw($exception);
+                $this->inputOutput->catch($exception);
             }
 
         }
