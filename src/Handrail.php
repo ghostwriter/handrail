@@ -29,6 +29,8 @@ final readonly class Handrail implements HandrailInterface
 
     public const string OPTION_DISABLE = 'disable';
 
+    public const string OPTION_PACKAGES = 'packages';
+
     public const string EXTRA = 'extra';
 
     public function __construct(
