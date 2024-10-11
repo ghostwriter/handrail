@@ -12,6 +12,7 @@ use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPostUpdate;
 use Ghostwriter\Handrail\EventDispatcher\Listener\ComposerPostInstallListener;
 use Ghostwriter\Handrail\EventDispatcher\Listener\ComposerPostUpdateListener;
 use Override;
+use Throwable;
 
 /**
  * @implements FactoryInterface<ListenerProvider>
@@ -19,6 +20,8 @@ use Override;
 final readonly class ListenerProviderFactory implements FactoryInterface
 {
     /**
+     * @throws Throwable
+     *
      * @return ListenerProvider
      */
     #[Override]
