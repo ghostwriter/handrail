@@ -6,5 +6,5 @@ namespace Ghostwriter\Handrail;
 
 interface HandrailInterface
 {
-    public function guard(string $path): void;
+    public function guard(string ...$files): void;
 }
