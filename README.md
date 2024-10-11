@@ -125,6 +125,10 @@ Handrail::new()->guard($phpFile);
 - [Nathanael Esayeas](https://github.com/ghostwriter)
 - [All Contributors](https://github.com/ghostwriter/handrail/contributors)
 
+### Thanks
+
+- [Yevhen Sidelnyk](https://github.com/rela589n) for the [inspiration](https://github.com/rela589n/knowledge-base/blob/a72b3071b770253dc61d03d8d2849e47a8229bc7/PHP/Psalm%20in%20a%20separate%20composer.json.md).
+
 ### Changelog
 
 Please see [CHANGELOG.md](./CHANGELOG.md) for more information on what has changed recently.
