@@ -24,12 +24,12 @@
     ],
     "homepage": "https://github.com/ghostwriter/handrail",
     "support": {
-        "docs": "https://github.com/ghostwriter/handrail",
-        "forum": "https://github.com/ghostwriter/handrail/discussions",
         "issues": "https://github.com/ghostwriter/handrail/issues",
+        "forum": "https://github.com/ghostwriter/handrail/discussions",
+        "source": "https://github.com/ghostwriter/handrail",
+        "docs": "https://github.com/ghostwriter/handrail",
         "rss": "https://github.com/ghostwriter/handrail/releases.atom",
-        "security": "https://github.com/ghostwriter/handrail/security/advisories/new",
-        "source": "https://github.com/ghostwriter/handrail"
+        "security": "https://github.com/ghostwriter/handrail/security/advisories/new"
     },
     "funding": [
         {
@@ -43,14 +43,15 @@
         "ext-tokenizer": "*",
         "composer-plugin-api": "^2.6.0",
         "composer-runtime-api": "^2.2.2",
+        "composer/composer": "^2.8.1",
         "ghostwriter/container": "^4.0.3",
         "ghostwriter/event-dispatcher": "^5.0.2",
-        "ghostwriter/filesystem": "^0.1.0"
+        "ghostwriter/filesystem": "^0.1.1",
+        "ghostwriter/json": "^3.0.0"
     },
     "require-dev": {
-        "composer/composer": "^2.8.1",
         "ghostwriter/coding-standard": "dev-main",
-        "symfony/var-dumper": "^7.1",
+        "symfony/var-dumper": "^7.1.5",
         "vimeo/psalm": "dev-master"
     },
     "minimum-stability": "stable",
@@ -67,34 +68,36 @@
     },
     "config": {
         "allow-plugins": {
-            "ghostwriter/handrail": true,
-            "ghostwriter/coding-standard": true
+            "ghostwriter/coding-standard": true,
+            "ghostwriter/handrail": true
         },
         "classmap-authoritative": false,
         "discard-changes": true,
         "optimize-autoloader": true,
+        "platform": {
+            "php": "8.3.999"
+        },
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
         "sort-packages": true,
-        "use-parent-dir": false,
-        "platform": {
-            "php": "8.3.999"
-        }
+        "use-parent-dir": false
     },
     "extra": {
         "class": "Ghostwriter\\Handrail\\Plugin",
-        "plugin-optional": false,
         "ghostwriter/handrail": {
             "disable": false,
-            "include": [
-                "vendor/amphp/*/"
-            ],
-            "exclude": [
-                "src",
-                "tests"
+            "files": [
+                "vendor/amphp/amp/src/Future/functions.php",
+                "vendor/amphp/amp/src/Internal/functions.php",
+                "vendor/amphp/amp/src/functions.php",
+                "vendor/amphp/byte-stream/src/Internal/functions.php",
+                "vendor/amphp/byte-stream/src/functions.php",
+                "vendor/amphp/serialization/src/functions.php",
+                "vendor/amphp/sync/src/functions.php"
             ]
-        }
+        },
+        "plugin-optional": false
     },
     "scripts": {
         "bin_ecs": "ecs check --clear-cache --no-interaction",
