@@ -68,14 +68,12 @@ To configure the paths or files to scan, create a composer `extra` configuration
     "extra": {
         "ghostwriter/handrail": {
             "disable": false,
+            "packages": [
+                "vendor/package"
+            ],
             "files": [
-                "vendor/amphp/amp/src/Future/functions.php",
-                "vendor/amphp/amp/src/Internal/functions.php",
                 "vendor/amphp/amp/src/functions.php",
-                "vendor/amphp/byte-stream/src/Internal/functions.php",
-                "vendor/amphp/byte-stream/src/functions.php",
-                "vendor/amphp/serialization/src/functions.php",
-                "vendor/amphp/sync/src/functions.php"
+                "relative/path/to/file.php"
             ]
         }
     }
