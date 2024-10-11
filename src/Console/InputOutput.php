@@ -6,6 +6,9 @@ namespace Ghostwriter\Handrail\Console;
 
 use Ghostwriter\Handrail\Handrail;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Throwable;
+
+use const PHP_EOL;
 
 final readonly class InputOutput
 {
@@ -19,6 +22,11 @@ final readonly class InputOutput
         $this->symfonyStyle->error(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
+    public function info(string $message): void
+    {
+        $this->symfonyStyle->info(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
+    }
+
     public function iterate(iterable $iterables): iterable
     {
         yield from $this->symfonyStyle->progressIterate($iterables);
@@ -27,6 +35,19 @@ final readonly class InputOutput
     public function success(string $message): void
     {
         $this->symfonyStyle->success(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
+    }
+
+    public function throw(Throwable $throwable): void
+    {
+        $this->symfonyStyle->warning(
+            \sprintf(
+                '[%s]: %s %s%s',
+                Handrail::PACKAGE_NAME,
+                \mb_substr(\mb_strrchr($throwable::class, '\\'), 1) . ' was thrown:',
+                PHP_EOL,
+                $throwable->getMessage(),
+            )
+        );
     }
 
     public function title(string $message): void
