@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Handrail\EventDispatcher\Listener;
 
+use Composer\Console\Application;
 use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPostUpdate;
+use Symfony\Component\Console\Input\ArrayInput;
 
-use const PHP_EOL;
-use const STDOUT;
-
-final class ComposerPostUpdateListener
+final readonly class ComposerPostUpdateListener
 {
-    public function __invoke(ComposerPostUpdate $event): void
+    public function __construct(
+        private Application $application
+    ) {
+    }
+
+    public function __invoke(ComposerPostUpdate $composerPostUpdate): void
     {
-        $eventName = \mb_substr(\mb_strrchr($event::class, '\\'), 1);
-        $listenerName = \mb_substr(\mb_strrchr(self::class, '\\'), 1);
-
-        \fwrite(STDOUT, $listenerName . ' - ' . $eventName . PHP_EOL);
-
-        $event->getIO()
-            ->write('Composer post update event' . PHP_EOL);
+        $this->application->run(new ArrayInput([
+            'command' => 'handrail',
+        ]));
     }
 }
