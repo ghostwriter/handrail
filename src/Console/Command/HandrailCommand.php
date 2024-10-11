@@ -8,19 +8,33 @@ use Composer\Command\BaseCommand;
 use Composer\InstalledVersions;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
 use Ghostwriter\Handrail\Console\InputOutput;
+use Ghostwriter\Handrail\Handrail;
 use Ghostwriter\Handrail\HandrailInterface;
+use Ghostwriter\Json\Interface\JsonInterface;
+use Override;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
 
 final class HandrailCommand extends BaseCommand
 {
+    public const array DEFAULT_COMPOSER_EXTRA = [
+        Handrail::EXTRA => [
+            Handrail::PACKAGE_NAME => [
+                Handrail::OPTION_DISABLE => false,
+                Handrail::OPTION_FILES => [],
+            ],
+        ],
+    ];
+
     public function __construct(
-        private HandrailInterface $handrail,
-        private InputOutput $inputOutput,
-        private FilesystemInterface $filesystem
+        private readonly HandrailInterface $handrail,
+        private readonly InputOutput $inputOutput,
+        private readonly FilesystemInterface $filesystem,
+        private readonly JsonInterface $json
     ) {
         parent::__construct();
     }
@@ -28,6 +42,7 @@ final class HandrailCommand extends BaseCommand
     /**
      * @throws Throwable
      */
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -38,108 +53,100 @@ final class HandrailCommand extends BaseCommand
     /**
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->inputOutput->title(
             \sprintf(
                 'Handrail (%s) is safeguarding PHP functions from redeclaration conflicts.',
-                InstalledVersions::getPrettyVersion('ghostwriter/handrail'),
+                InstalledVersions::getPrettyVersion(Handrail::PACKAGE_NAME),
             )
         );
 
-        $filesystem = $this->filesystem;
+        $extra = $this->requireComposer()
+            ->getPackage()
+            ->getExtra();
 
-        $workspace = $filesystem->currentWorkingDirectory();
+        if (! \array_key_exists(Handrail::PACKAGE_NAME, $extra)) {
+            $this->inputOutput->error(
+                \sprintf(
+                    'Handrail is not configured, add the following configuration to your composer.json file.%s',
+                    PHP_EOL . $this->json->encode(self::DEFAULT_COMPOSER_EXTRA, true),
+                )
+            );
 
-        $composerJson = $workspace . DIRECTORY_SEPARATOR . 'composer.json';
-
-        if (! $filesystem->isFile($composerJson)) {
-            $this->inputOutput->error('Invalid composer.json: ' . $composerJson);
             return 1;
         }
 
-        $composerJson = \json_decode($filesystem->read($composerJson), true);
+        /** @var array{disable: ?bool, files: ?list<string>} $config */
+        $config = $extra[Handrail::PACKAGE_NAME];
 
-        $disable = $composerJson['extra']['ghostwriter/handrail']['disable'] ?? false;
+        $disable = $config[Handrail::OPTION_DISABLE] ?? false;
 
         if (! \is_bool($disable)) {
-            $this->inputOutput->error('Invalid disable value: ' . \get_debug_type($disable));
+            $this->inputOutput->error(\sprintf(
+                'Invalid `disable` configuration; expected an "bool" but "%s" provided.%s',
+                \get_debug_type($disable),
+                PHP_EOL . $this->json->encode($config, true),
+            ));
+
             return 1;
         }
 
         if ($disable) {
             $this->inputOutput->warning('Handrail is disabled.');
-            return 0;
-        }
-
-        $include = $composerJson['extra']['ghostwriter/handrail']['include'] ?? [];
-
-        if (! \is_array($include)) {
-            $this->inputOutput->error('Invalid include value: ' . \get_debug_type($include));
-            return 1;
-        }
-
-        $exclude = $composerJson['extra']['ghostwriter/handrail']['exclude'] ?? [];
-
-        if (! \is_array($exclude)) {
-            $this->inputOutput->error('Invalid exclude value: ' . \get_debug_type($exclude));
-            return 1;
-        }
-
-        if ($include === [] && $exclude === []) {
-            $this->inputOutput->success('No include or exclude paths are defined.');
 
             return 0;
         }
 
-        foreach ($include as $path) {
-            if (! \is_string($path)) {
-                $this->inputOutput->error('Invalid include path: ' . \get_debug_type($path));
+        /** @var ?list<?string> $files */
+        $files = $config[Handrail::OPTION_FILES] ?? [];
+
+        if (! \is_array($files)) {
+            $this->inputOutput->error(\sprintf(
+                'Invalid `files` configuration; expected an "array" but "%s" provided.%s',
+                \get_debug_type($files),
+                PHP_EOL . $this->json->encode($config, true),
+            ));
+
+            return 1;
+        }
+
+        if ($files === []) {
+            $this->inputOutput->success('No files to process.');
+
+            return 0;
+        }
+
+        $workspace = $this->filesystem->currentWorkingDirectory();
+
+        foreach ($files as $file) {
+            if (! \is_string($file)) {
+                $this->inputOutput->error(
+                    \sprintf(
+                        'Invalid file path; expected a "string" but "%s" provided.%s',
+                        \get_debug_type($file),
+                        PHP_EOL . $this->json->encode($files, true),
+                    )
+                );
+
                 return 1;
             }
 
-            $this->inputOutput->success('Process: ' . $path);
+            $fullPath = $workspace . DIRECTORY_SEPARATOR . $file;
 
-            $fullPath = $filesystem->parentDirectory($workspace . DIRECTORY_SEPARATOR . $path);
+            if (! \str_ends_with($fullPath, '.php')) {
+                $this->inputOutput->warning('Invalid PHP file: ' . $fullPath);
 
-            foreach ($this->inputOutput->iterate($filesystem->recursiveIterator($fullPath)) as $file) {
-                $path = $file->toString();
+                continue;
+            }
 
-                if (! \str_ends_with($path, '.php')) {
-                    $this->inputOutput->warning('Excluded non-PHP: ' . $path);
-                    continue;
-                }
+            $this->inputOutput->success('Processing: ' . $file);
 
-                if (\str_starts_with($path, $workspace . DIRECTORY_SEPARATOR . 'src')) {
-                    $this->inputOutput->warning('Excluded src: ' . $path);
-                    continue;
-                }
+            if (! \str_contains($fullPath, \sprintf('%svendor%s', DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR))) {
+                $this->inputOutput->error('Invalid vendor directory: ' . $fullPath);
 
-                if (\str_starts_with($path, $workspace . DIRECTORY_SEPARATOR . 'tests')) {
-                    $this->inputOutput->warning('Excluded tests: ' . $path);
-                    continue;
-                }
-
-                foreach ($exclude as $excludePath) {
-                    if (\str_contains($path, $excludePath)) {
-                        $this->inputOutput->warning('Excluded: ' . $path);
-                        continue 2;
-                    }
-                }
-                //                if (! \str_contains($path, \sprintf('%svendor%s', DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR))) {
-                //                    $this->inputOutput->error('Invalid vendor directory: ' . $path);
-                //                    continue;
-                //                }
-
-                if (! \str_contains($path, \sprintf('%svendor%s', DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR))) {
-                    $this->inputOutput->error('Invalid vendor directory: ' . $path);
-
-                    continue;
-                }
-
-                $this->inputOutput->success('Processing: ' . $path);
-
-                $this->handrail->include($path);
+                continue;
             }
 
             $this->handrail->guard($fullPath);
