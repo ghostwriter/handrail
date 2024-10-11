@@ -37,7 +37,7 @@ final readonly class InputOutput
         $this->symfonyStyle->success(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
-    public function throw(Throwable $throwable): void
+    public function catch(Throwable $throwable): void
     {
         $this->symfonyStyle->warning(
             \sprintf(
