@@ -15,6 +15,7 @@ use const T_CLASS;
 use const T_FUNCTION;
 use const T_IF;
 use const T_STRING;
+use const T_USE;
 
 final readonly class FunctionDeclarationModifier implements ModifierInterface
 {
@@ -61,6 +62,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
         $tokens = PhpToken::tokenize($content);
         $indent = \str_repeat(' ', 4);
         $openIfBlock = false;
+        $insideUseBlock = false;
         $insideFunctionCheck = false;
         $insideClass = false;
         $output = '';
@@ -93,13 +95,24 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                 $insideClass = true;
             }
 
+            // Detect the start of a use block
+            if ($id === T_USE) {
+                $insideUseBlock = true;
+            }
+
             $text = $token->text;
 
             // Detect the start of a function declaration
             if ($id === T_FUNCTION) {
+                // Skip class methods
                 if ($insideClass) {
                     $output .= $text;
+                    continue;
+                }
 
+                // Skip functions inside use blocks
+                if ($insideUseBlock) {
+                    $output .= $text;
                     continue;
                 }
 
@@ -131,6 +144,11 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             // Handle single-character tokens
             $output .= $text;
 
+            // Detect the end of a use block
+            if ($insideUseBlock && $text === ';') {
+                $insideUseBlock = false;
+            }
+
             $isOpeningBrace = $text === '{';
             if ($isOpeningBrace) {
                 ++$functionLevel;
@@ -140,8 +158,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                 }
             }
 
-            $isClosingBrace = $text === '}';
-            if (! $isClosingBrace) {
+            if ($text !== '}') {
                 continue;
             }
 
