@@ -38,7 +38,7 @@ final readonly class Paths
             ...\array_map(
                 static fn (string $path): OriginalFileInterface
                     => OriginalFile::new(Path::new($path), Filesystem::new()->read($path)),
-                $paths
+                $files
             )
         );
     }
