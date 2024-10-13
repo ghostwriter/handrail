@@ -25,9 +25,7 @@
     "homepage": "https://github.com/ghostwriter/handrail",
     "support": {
         "issues": "https://github.com/ghostwriter/handrail/issues",
-        "forum": "https://github.com/ghostwriter/handrail/discussions",
         "source": "https://github.com/ghostwriter/handrail",
-        "docs": "https://github.com/ghostwriter/handrail",
         "rss": "https://github.com/ghostwriter/handrail/releases.atom",
         "security": "https://github.com/ghostwriter/handrail/security/advisories/new"
     },
@@ -62,7 +60,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests"
-        }
+        },
+        "exclude-from-classmap": [
+            "/tests/Fixture/"
+        ]
     },
     "config": {
         "allow-plugins": {
