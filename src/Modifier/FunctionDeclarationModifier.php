@@ -61,10 +61,12 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
         $tokens = PhpToken::tokenize($content);
         $indent = \str_repeat(' ', 4);
         $openIfBlock = false;
-        $insideFunctionCheck = $insideClass = false;
+        $insideFunctionCheck = false;
+        $insideClass = false;
         $output = '';
         $previousLine = 0;
-        $functionLevel = $classLevel = 0;
+        $functionLevel = 0;
+        $classLevel = 0;
 
         $previousToken = null;
         for ($i = 0, $count = \count($tokens); $i < $count; $i++) {
