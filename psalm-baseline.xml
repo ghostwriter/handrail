@@ -118,18 +118,9 @@
     <LessSpecificReturnType>
       <code><![CDATA[OriginalFileInterface]]></code>
     </LessSpecificReturnType>
-    <MixedArgument>
-      <code><![CDATA[$paths]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[new]]></code>
     </PossiblyUnusedMethod>
-    <UndefinedVariable>
-      <code><![CDATA[$paths]]></code>
-    </UndefinedVariable>
-    <UnusedParam>
-      <code><![CDATA[$files]]></code>
-    </UnusedParam>
   </file>
   <file src="tests/Unit/AbstractTestCase.php">
     <PossiblyNullArgument>
