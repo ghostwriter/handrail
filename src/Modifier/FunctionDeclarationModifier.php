@@ -11,6 +11,7 @@ use Ghostwriter\Handrail\Value\File\OriginalFileInterface;
 use Override;
 use PhpToken;
 
+use const T_CLASS;
 use const T_FUNCTION;
 use const T_IF;
 use const T_STRING;
@@ -60,11 +61,12 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
         $tokens = PhpToken::tokenize($content);
         $indent = \str_repeat(' ', 4);
         $openIfBlock = false;
-        $insideFunctionCheck = false;
+        $insideFunctionCheck = $insideClass = false;
         $output = '';
         $previousLine = 0;
-        $level = 0;
+        $functionLevel = $classLevel = 0;
 
+        $previousToken = null;
         for ($i = 0, $count = \count($tokens); $i < $count; $i++) {
             $token = $tokens[$i];
 
@@ -85,10 +87,19 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                 $insideFunctionCheck = true;
             }
 
+            if ($id === T_CLASS) {
+                $insideClass = true;
+            }
+
             $text = $token->text;
 
             // Detect the start of a function declaration
             if ($id === T_FUNCTION) {
+                if ($insideClass) {
+                    $output .= $text;
+
+                    continue;
+                }
 
                 // If we are inside an if (!function_exists()) block, skip this function declaration
                 if ($insideFunctionCheck) {
@@ -118,20 +129,35 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             // Handle single-character tokens
             $output .= $text;
 
-            $level = match ($text) {
-                '{' => $level + 1,
-                '}' => $level - 1,
-                default => $level,
-            };
+            $isOpeningBrace = $text === '{';
+            if ($isOpeningBrace) {
+                ++$functionLevel;
 
-            $skip = match (true) {
-                ! $openIfBlock,
-                $text !== '}',
-                $level !== 0 => true,
-                default => false,
-            };
+                if ($insideClass) {
+                    ++$classLevel;
+                }
+            }
 
-            if ($skip) {
+            $isClosingBrace = $text === '}';
+            if (! $isClosingBrace) {
+                continue;
+            }
+
+            --$functionLevel;
+
+            if ($insideClass) {
+                --$classLevel;
+
+                if ($classLevel === 0) {
+                    $insideClass = false;
+                }
+            }
+
+            if (! $openIfBlock) {
+                continue;
+            }
+
+            if ($functionLevel !== 0) {
                 continue;
             }
 
