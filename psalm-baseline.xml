@@ -58,6 +58,11 @@
       <code><![CDATA[$eventDispatcher]]></code>
     </UnusedProperty>
   </file>
+  <file src="src/Modifier/FunctionDeclarationModifier.php">
+    <UnusedVariable>
+      <code><![CDATA[$previousToken]]></code>
+    </UnusedVariable>
+  </file>
   <file src="src/Plugin.php">
     <MixedAssignment>
       <code><![CDATA[$commands]]></code>
