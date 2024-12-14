@@ -70,8 +70,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
         $functionLevel = 0;
         $classLevel = 0;
 
-        $previousToken = null;
-        for ($i = 0, $count = \count($tokens); $i < $count; $i++) {
+        for ($i = 0, $count = \count($tokens); $i < $count; ++$i) {
             $token = $tokens[$i];
 
             if (! $token instanceof PhpToken) {
