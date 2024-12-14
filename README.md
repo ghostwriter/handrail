@@ -82,6 +82,7 @@ To configure the paths or files to scan, create a composer `extra` configuration
 
 - **`disable`**: (default: `false`) A boolean flag to enable or disable Handrail.
 - **`files`**: (default: `[]`) An array of files to scan for function declarations.
+- **`packages`**: (default: `[]`) An array of Composer packages to scan for function declarations.
 
 ## Usage
 
