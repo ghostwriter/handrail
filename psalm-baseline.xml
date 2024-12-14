@@ -58,11 +58,6 @@
       <code><![CDATA[$eventDispatcher]]></code>
     </UnusedProperty>
   </file>
-  <file src="src/Modifier/FunctionDeclarationModifier.php">
-    <UnusedVariable>
-      <code><![CDATA[$previousToken]]></code>
-    </UnusedVariable>
-  </file>
   <file src="src/Plugin.php">
     <MixedAssignment>
       <code><![CDATA[$commands]]></code>
@@ -122,7 +117,7 @@
       <code><![CDATA[new]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="tests/Unit/AbstractTestCase.php">
+  <file src="tests/unit/AbstractTestCase.php">
     <PossiblyNullArgument>
       <code><![CDATA[self::$temporaryDirectory]]></code>
     </PossiblyNullArgument>
@@ -130,7 +125,7 @@
       <code><![CDATA[delete]]></code>
     </PossiblyNullReference>
   </file>
-  <file src="tests/Unit/HandrailTest.php">
+  <file src="tests/unit/HandrailTest.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$temporaryFile]]></code>
     </ArgumentTypeCoercion>
