@@ -16,6 +16,8 @@ use Ghostwriter\Handrail\Value\Paths;
 use Override;
 use Throwable;
 
+use function sprintf;
+
 /** @see HandrailTest */
 final readonly class Handrail implements HandrailInterface
 {
@@ -38,8 +40,7 @@ final readonly class Handrail implements HandrailInterface
         private FilesystemInterface $filesystem,
         private FunctionDeclarationModifier $functionDeclarationModifier,
         private EventDispatcherInterface $eventDispatcher,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws Throwable
@@ -65,7 +66,7 @@ final readonly class Handrail implements HandrailInterface
     {
         foreach ($files as $file) {
             if (! $this->filesystem->isFile($file)) {
-                throw new ShouldNotHappenException(\sprintf('Path is not a file: %s', $file));
+                throw new ShouldNotHappenException(sprintf('Path is not a file: %s', $file));
             }
 
             $this->guardFile($file);
