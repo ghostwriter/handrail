@@ -17,8 +17,7 @@ final readonly class OriginalFile implements OriginalFileInterface
     public function __construct(
         private PathInterface $path,
         private string $code,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public static function new(PathInterface $path, string $code): self
