@@ -12,8 +12,7 @@ final readonly class ComposerPostUpdateListener
 {
     public function __construct(
         private Application $application
-    ) {
-    }
+    ) {}
 
     public function __invoke(ComposerPostUpdate $composerPostUpdate): void
     {
