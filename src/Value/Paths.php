@@ -10,6 +10,8 @@ use Ghostwriter\Handrail\Value\File\OriginalFile;
 use Ghostwriter\Handrail\Value\File\OriginalFileInterface;
 use WeakMap;
 
+use function array_map;
+
 final readonly class Paths
 {
     /**
@@ -35,7 +37,7 @@ final readonly class Paths
     {
         return new self(
             $filesystem,
-            ...\array_map(
+            ...array_map(
                 static fn (string $path): OriginalFileInterface
                     => OriginalFile::new(Path::new($path), Filesystem::new()->read($path)),
                 $files
