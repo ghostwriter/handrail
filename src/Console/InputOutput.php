@@ -10,20 +10,23 @@ use Throwable;
 
 use const PHP_EOL;
 
+use function mb_strrchr;
+use function mb_substr;
+use function sprintf;
+
 final readonly class InputOutput
 {
     public function __construct(
         private SymfonyStyle $symfonyStyle
-    ) {
-    }
+    ) {}
 
     public function catch(Throwable $throwable): void
     {
         $this->symfonyStyle->warning(
-            \sprintf(
+            sprintf(
                 '[%s]: %s %s%s',
                 Handrail::PACKAGE_NAME,
-                \mb_substr(\mb_strrchr($throwable::class, '\\'), 1) . ' was thrown:',
+                mb_substr(mb_strrchr($throwable::class, '\\'), 1) . ' was thrown:',
                 PHP_EOL,
                 $throwable->getMessage(),
             )
@@ -32,12 +35,12 @@ final readonly class InputOutput
 
     public function error(string $message): void
     {
-        $this->symfonyStyle->error(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
+        $this->symfonyStyle->error(sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
     public function info(string $message): void
     {
-        $this->symfonyStyle->info(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
+        $this->symfonyStyle->info(sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
     public function iterate(iterable $iterables): iterable
@@ -47,16 +50,16 @@ final readonly class InputOutput
 
     public function success(string $message): void
     {
-        $this->symfonyStyle->success(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
+        $this->symfonyStyle->success(sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 
     public function title(string $message): void
     {
-        $this->symfonyStyle->title(\sprintf('[%s]', $message));
+        $this->symfonyStyle->title(sprintf('[%s]', $message));
     }
 
     public function warning(string $message): void
     {
-        $this->symfonyStyle->warning(\sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
+        $this->symfonyStyle->warning(sprintf('[%s]: %s', Handrail::PACKAGE_NAME, $message));
     }
 }
