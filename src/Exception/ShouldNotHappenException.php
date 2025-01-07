@@ -7,6 +7,4 @@ namespace Ghostwriter\Handrail\Exception;
 use Ghostwriter\Handrail\Value\ExceptionInterface;
 use RuntimeException;
 
-final class ShouldNotHappenException extends RuntimeException implements ExceptionInterface
-{
-}
+final class ShouldNotHappenException extends RuntimeException implements ExceptionInterface {}
