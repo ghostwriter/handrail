@@ -51,9 +51,7 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
      * Apply plugin modifications to Composer.
      */
     #[Override]
-    public function activate(Composer $composer, IOInterface $io): void
-    {
-    }
+    public function activate(Composer $composer, IOInterface $io): void {}
 
     /**
      * Remove any hooks from Composer.
@@ -63,9 +61,7 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
      * so the old one can be deactivated and the new one activated.
      */
     #[Override]
-    public function deactivate(Composer $composer, IOInterface $io): void
-    {
-    }
+    public function deactivate(Composer $composer, IOInterface $io): void {}
 
     #[Override]
     public function getCapabilities()
@@ -106,9 +102,7 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
      * This will be called after deactivate.
      */
     #[Override]
-    public function uninstall(Composer $composer, IOInterface $io): void
-    {
-    }
+    public function uninstall(Composer $composer, IOInterface $io): void {}
 
     /**
      * @return array<string,string> The event names to listen to
