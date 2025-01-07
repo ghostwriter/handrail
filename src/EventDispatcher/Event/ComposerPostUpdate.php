@@ -10,8 +10,7 @@ final readonly class ComposerPostUpdate
 {
     public function __construct(
         private Event $event,
-    ) {
-    }
+    ) {}
 
     public function event(): Event
     {
