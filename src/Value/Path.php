@@ -18,8 +18,7 @@ final class Path implements PathInterface
      */
     private function __construct(
         private readonly string $path,
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-string $path
