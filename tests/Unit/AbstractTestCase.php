@@ -12,6 +12,9 @@ use Throwable;
 
 use const DIRECTORY_SEPARATOR;
 
+use function mb_strrchr;
+use function mb_substr;
+
 abstract class AbstractTestCase extends TestCase
 {
     protected static ?FilesystemInterface $filesystem;
@@ -59,6 +62,6 @@ abstract class AbstractTestCase extends TestCase
     public static function temporaryDirectory(): string
     {
         return self::filesystem()
-            ->createTemporaryDirectory(\mb_substr(\mb_strrchr(static::class, '\\'), 1));
+            ->createTemporaryDirectory(mb_substr(mb_strrchr(static::class, '\\'), 1));
     }
 }
