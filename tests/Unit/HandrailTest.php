@@ -25,6 +25,8 @@ use Throwable;
 
 use const DIRECTORY_SEPARATOR;
 
+use function is_a;
+
 #[CoversClass(Handrail::class)]
 #[UsesClass(ServiceProvider::class)]
 #[UsesClass(ListenerProviderFactory::class)]
@@ -58,8 +60,8 @@ final class HandrailTest extends AbstractTestCase
      */
     public function testImplementsInterface(): void
     {
-        self::assertTrue(\is_a(Handrail::class, HandrailInterface::class, true));
-        self::assertTrue(\is_a(ExceptionInterface::class, Throwable::class, true));
+        self::assertTrue(is_a(Handrail::class, HandrailInterface::class, true));
+        self::assertTrue(is_a(ExceptionInterface::class, Throwable::class, true));
     }
 
     /**
