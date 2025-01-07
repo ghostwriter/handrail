@@ -12,8 +12,7 @@ final readonly class ComposerPostInstallListener
 {
     public function __construct(
         private Application $application
-    ) {
-    }
+    ) {}
 
     public function __invoke(ComposerPostInstall $composerPostInstall): void
     {
