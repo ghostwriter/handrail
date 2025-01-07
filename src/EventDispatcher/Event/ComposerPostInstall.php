@@ -10,8 +10,7 @@ final readonly class ComposerPostInstall
 {
     public function __construct(
         private Event $event,
-    ) {
-    }
+    ) {}
 
     public function event(): Event
     {
