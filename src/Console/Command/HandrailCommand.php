@@ -20,6 +20,15 @@ use Throwable;
 use const DIRECTORY_SEPARATOR;
 use const PHP_EOL;
 
+use function array_key_exists;
+use function get_debug_type;
+use function is_array;
+use function is_bool;
+use function is_string;
+use function sprintf;
+use function str_contains;
+use function str_ends_with;
+
 final class HandrailCommand extends BaseCommand
 {
     public const array DEFAULT_COMPOSER_EXTRA = [
@@ -62,7 +71,7 @@ final class HandrailCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->inputOutput->title(
-            \sprintf(
+            sprintf(
                 'Handrail (%s) is safeguarding PHP functions from redeclaration conflicts.',
                 InstalledVersions::getPrettyVersion(Handrail::PACKAGE_NAME),
             )
@@ -74,7 +83,7 @@ final class HandrailCommand extends BaseCommand
 
         $extra = $rootPackage->getExtra();
 
-        if (! \array_key_exists(Handrail::PACKAGE_NAME, $extra)) {
+        if (! array_key_exists(Handrail::PACKAGE_NAME, $extra)) {
             /** @var array{ghostwriter/handrail: array{disable: bool, files: list<string>, packages: list<string>}} $extra */
             $extra = self::DEFAULT_COMPOSER_EXTRA[Handrail::EXTRA];
         }
@@ -84,10 +93,10 @@ final class HandrailCommand extends BaseCommand
 
         $disable = $config[Handrail::OPTION_DISABLE] ?? false;
 
-        if (! \is_bool($disable)) {
-            $this->inputOutput->error(\sprintf(
+        if (! is_bool($disable)) {
+            $this->inputOutput->error(sprintf(
                 'Invalid `disable` configuration; expected an "bool" but "%s" provided.%s',
-                \get_debug_type($disable),
+                get_debug_type($disable),
                 PHP_EOL . $this->json->encode($config, true),
             ));
 
@@ -103,10 +112,10 @@ final class HandrailCommand extends BaseCommand
         /** @var ?list<?string> $files */
         $files = $config[Handrail::OPTION_FILES] ?? [];
 
-        if (! \is_array($files)) {
-            $this->inputOutput->error(\sprintf(
+        if (! is_array($files)) {
+            $this->inputOutput->error(sprintf(
                 'Invalid `files` configuration; expected an "array" but "%s" provided.%s',
-                \get_debug_type($files),
+                get_debug_type($files),
                 PHP_EOL . $this->json->encode($config, true),
             ));
 
@@ -115,10 +124,10 @@ final class HandrailCommand extends BaseCommand
 
         /** @var ?list<?string> $packages */
         $packages = $config[Handrail::OPTION_PACKAGES] ?? [];
-        if (! \is_array($packages)) {
-            $this->inputOutput->error(\sprintf(
+        if (! is_array($packages)) {
+            $this->inputOutput->error(sprintf(
                 'Invalid `packages` configuration; expected an "array" but "%s" provided.%s',
-                \get_debug_type($packages),
+                get_debug_type($packages),
                 PHP_EOL . $this->json->encode($config, true),
             ));
 
@@ -140,11 +149,11 @@ final class HandrailCommand extends BaseCommand
             $this->inputOutput->info('Processing package: ' . $name);
 
             foreach ($package->getAutoload()['files'] ?? [] as $filePath) {
-                $files[] = \sprintf('vendor%s%s%s%s', DIRECTORY_SEPARATOR, $name, DIRECTORY_SEPARATOR, $filePath);
+                $files[] = sprintf('vendor%s%s%s%s', DIRECTORY_SEPARATOR, $name, DIRECTORY_SEPARATOR, $filePath);
             }
         }
 
-        if ($files === []) {
+        if ([] === $files) {
             $this->inputOutput->success('No files to process.');
 
             return 0;
@@ -153,11 +162,11 @@ final class HandrailCommand extends BaseCommand
         $workspace = $this->filesystem->currentWorkingDirectory() . DIRECTORY_SEPARATOR;
 
         foreach ($files as $file) {
-            if (! \is_string($file)) {
+            if (! is_string($file)) {
                 $this->inputOutput->error(
-                    \sprintf(
+                    sprintf(
                         'Invalid file path; expected a "string" but "%s" provided.%s',
-                        \get_debug_type($file),
+                        get_debug_type($file),
                         PHP_EOL . $this->json->encode($files, true),
                     )
                 );
@@ -167,7 +176,7 @@ final class HandrailCommand extends BaseCommand
 
             $fullPath = $workspace . $file;
 
-            if (! \str_ends_with($fullPath, '.php')) {
+            if (! str_ends_with($fullPath, '.php')) {
                 $this->inputOutput->warning('Invalid PHP file: ' . $fullPath);
 
                 continue;
@@ -175,7 +184,7 @@ final class HandrailCommand extends BaseCommand
 
             $this->inputOutput->info('Processing: ' . $file);
 
-            if (! \str_contains($fullPath, \sprintf('%svendor%s', DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR))) {
+            if (! str_contains($fullPath, sprintf('%svendor%s', DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR))) {
                 $this->inputOutput->error('Invalid vendor directory: ' . $fullPath);
 
                 continue;
