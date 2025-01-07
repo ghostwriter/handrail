@@ -17,6 +17,11 @@ use const T_IF;
 use const T_STRING;
 use const T_USE;
 
+use function count;
+use function mb_strtolower;
+use function sprintf;
+use function str_repeat;
+
 final readonly class FunctionDeclarationModifier implements ModifierInterface
 {
     #[Override]
@@ -30,7 +35,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
 
     private function isFunctionExistsCheck(array $tokens, int $index): bool
     {
-        $counter = \count($tokens);
+        $counter = count($tokens);
         for ($i = $index; $i < $counter; ++$i) {
             $token = $tokens[$i];
 
@@ -40,16 +45,16 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
 
             $text = $token->text;
 
-            if ($text === '{') {
+            if ('{' === $text) {
                 // If we reach an opening brace before finding function_exists, it's not a check
                 break;
             }
 
-            if ($token->id !== T_STRING) {
+            if (T_STRING !== $token->id) {
                 continue;
             }
 
-            if (\mb_strtolower($text) === 'function_exists') {
+            if (mb_strtolower($text) === 'function_exists') {
                 return true;
             }
         }
@@ -60,7 +65,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
     private function wrapFunctionsWithExistsCheck(string $content): string
     {
         $tokens = PhpToken::tokenize($content);
-        $indent = \str_repeat(' ', 4);
+        $indent = str_repeat(' ', 4);
         $openIfBlock = false;
         $insideUseBlock = false;
         $insideFunctionCheck = false;
@@ -70,7 +75,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
         $functionLevel = 0;
         $classLevel = 0;
 
-        for ($i = 0, $count = \count($tokens); $i < $count; ++$i) {
+        for ($i = 0, $count = count($tokens); $i < $count; ++$i) {
             $token = $tokens[$i];
 
             if (! $token instanceof PhpToken) {
@@ -86,32 +91,34 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             $id = $token->id;
 
             // Detect the start of an if (!function_exists()) block
-            if ($id === T_IF && $this->isFunctionExistsCheck($tokens, $i)) {
+            if (T_IF === $id && $this->isFunctionExistsCheck($tokens, $i)) {
                 $insideFunctionCheck = true;
             }
 
-            if ($id === T_CLASS) {
+            if (T_CLASS === $id) {
                 $insideClass = true;
             }
 
             // Detect the start of a use block
-            if ($id === T_USE) {
+            if (T_USE === $id) {
                 $insideUseBlock = true;
             }
 
             $text = $token->text;
 
             // Detect the start of a function declaration
-            if ($id === T_FUNCTION) {
+            if (T_FUNCTION === $id) {
                 // Skip class methods
                 if ($insideClass) {
                     $output .= $text;
+
                     continue;
                 }
 
                 // Skip functions inside use blocks
                 if ($insideUseBlock) {
                     $output .= $text;
+
                     continue;
                 }
 
@@ -126,13 +133,13 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                 $functionNameToken = $tokens[$i + 2]
                     ?? throw new ShouldNotHappenException('Invalid token: missing function name');
 
-                if ($functionNameToken->id !== T_STRING) {
+                if (T_STRING !== $functionNameToken->id) {
                     $output .= $text;
 
                     continue;
                 }
 
-                $output .= \sprintf("if (!function_exists('%s')) {\n%s%s", $functionNameToken->text, $indent, $text);
+                $output .= sprintf("if (!function_exists('%s')) {\n%s%s", $functionNameToken->text, $indent, $text);
 
                 $openIfBlock = true;
                 $previousLine = $line;
@@ -144,11 +151,11 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             $output .= $text;
 
             // Detect the end of a use block
-            if ($insideUseBlock && $text === ';') {
+            if ($insideUseBlock && ';' === $text) {
                 $insideUseBlock = false;
             }
 
-            $isOpeningBrace = $text === '{';
+            $isOpeningBrace = '{' === $text;
             if ($isOpeningBrace) {
                 ++$functionLevel;
 
@@ -157,7 +164,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                 }
             }
 
-            if ($text !== '}') {
+            if ('}' !== $text) {
                 continue;
             }
 
@@ -166,7 +173,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             if ($insideClass) {
                 --$classLevel;
 
-                if ($classLevel === 0) {
+                if (0 === $classLevel) {
                     $insideClass = false;
                 }
             }
@@ -175,7 +182,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                 continue;
             }
 
-            if ($functionLevel !== 0) {
+            if (0 !== $functionLevel) {
                 continue;
             }
 
