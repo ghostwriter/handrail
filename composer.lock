@@ -2378,12 +2378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "124829340be2b104fcac68dfb543165457420816"
+                "reference": "fc43a91f6d8a3191588c66267dafb2386de9893b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/124829340be2b104fcac68dfb543165457420816",
-                "reference": "124829340be2b104fcac68dfb543165457420816",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/fc43a91f6d8a3191588c66267dafb2386de9893b",
+                "reference": "fc43a91f6d8a3191588c66267dafb2386de9893b",
                 "shasum": ""
             },
             "require": {
@@ -2454,7 +2454,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-06T09:57:03+00:00"
+            "time": "2025-01-08T00:02:28+00:00"
         },
         {
             "name": "ghostwriter/psalm-plugin",
@@ -4451,7 +4451,7 @@
         "composer-plugin-api": "^2.6.0",
         "composer-runtime-api": "^2.2.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.999"
     },
