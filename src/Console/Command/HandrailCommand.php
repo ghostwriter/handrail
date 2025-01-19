@@ -78,7 +78,7 @@ final class HandrailCommand extends BaseCommand
                 )
             );
 
-            return 1;
+            return 0;
         }
 
         $this->inputOutput->title(
