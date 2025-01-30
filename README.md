@@ -1,8 +1,8 @@
 # Handrail
 
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/handrail&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
 [![Automation](https://github.com/ghostwriter/handrail/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/handrail/actions/workflows/automation.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/handrail?color=8892bf)](https://www.php.net/supported-versions)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/handrail&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/handrail?color=blue)](https://packagist.org/packages/ghostwriter/handrail)
 
 Safeguard your PHP code by wrapping function declarations in `if (!function_exists())` blocks.
