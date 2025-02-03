@@ -46,7 +46,7 @@
         "composer-plugin-api": "^2.6.0",
         "composer-runtime-api": "^2.2.2",
         "composer/composer": "^2.8.5",
-        "ghostwriter/container": "^4.0",
+        "ghostwriter/container": "^4.0.5",
         "ghostwriter/event-dispatcher": "^5.0.2",
         "ghostwriter/filesystem": "^0.1.1",
         "ghostwriter/json": "^3.0.0"
