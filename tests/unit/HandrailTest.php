@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use Generator;
-use Ghostwriter\Filesystem\Filesystem;
 use Ghostwriter\Handrail\Container\Factory\ListenerProviderFactory;
 use Ghostwriter\Handrail\Container\ServiceProvider;
 use Ghostwriter\Handrail\Exception\ShouldNotHappenException;
@@ -19,7 +18,6 @@ use Ghostwriter\Handrail\Value\Path;
 use Ghostwriter\Handrail\Value\Paths;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\UsesClass;
 use SplFileInfo;
 use Throwable;
 
@@ -27,15 +25,14 @@ use const DIRECTORY_SEPARATOR;
 
 use function is_a;
 
+#[CoversClass(FunctionDeclarationModifier::class)]
 #[CoversClass(Handrail::class)]
-#[UsesClass(ServiceProvider::class)]
-#[UsesClass(ListenerProviderFactory::class)]
-#[UsesClass(Filesystem::class)]
-#[UsesClass(Path::class)]
-#[UsesClass(FunctionDeclarationModifier::class)]
-#[UsesClass(ModifiedFile::class)]
-#[UsesClass(OriginalFile::class)]
-#[UsesClass(Paths::class)]
+#[CoversClass(ListenerProviderFactory::class)]
+#[CoversClass(ModifiedFile::class)]
+#[CoversClass(OriginalFile::class)]
+#[CoversClass(Path::class)]
+#[CoversClass(Paths::class)]
+#[CoversClass(ServiceProvider::class)]
 final class HandrailTest extends AbstractTestCase
 {
     /**
