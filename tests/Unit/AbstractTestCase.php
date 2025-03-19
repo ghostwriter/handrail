@@ -53,7 +53,7 @@ abstract class AbstractTestCase extends TestCase
     public static function fixturesDirectory(): string
     {
         return self::filesystem()
-            ->parentDirectory(__DIR__) . DIRECTORY_SEPARATOR . 'fixture';
+            ->parentDirectory(__DIR__) . DIRECTORY_SEPARATOR . 'Fixture';
     }
 
     /**
