@@ -1,0 +1,33 @@
+"repository":
+  "name": "handrail"
+  "description": "Safeguard PHP functions from redeclaration conflicts"
+  "homepage": "https://github.com/ghostwriter/handrail"
+  "topics": "composer, composer-plugin, conflicts, functions, ghostwriter, handrail, php, plugin, redeclaration, safeguard"
+  "private": false
+  "has_issues": true
+  "has_projects": false
+  "has_wiki": false
+  "has_downloads": true
+  "default_branch": "0.1.x"
+  "allow_squash_merge": true
+  "allow_merge_commit": true
+  "allow_rebase_merge": true
+  "delete_branch_on_merge": true
+  "enable_automated_security_fixes": true
+  "enable_vulnerability_alerts": true
+"milestones":
+  - "title": "0.0.2"
+    "description": "Patch release – targeting 0.0.x branch (semantic version: 0.0.2)"
+    "state": "closed"
+  - "title": "0.1.4"
+    "description": "Patch release – targeting 0.1.x branch (semantic version: 0.1.4)"
+    "state": "closed"
+  - "title": "0.1.5"
+    "description": "Patch release – targeting 0.1.x branch (semantic version: 0.1.5)"
+    "state": "open"
+  - "title": "0.2.0"
+    "description": "Minor release – targeting 0.2.x branch (semantic version: 0.2.0)"
+    "state": "open"
+  - "title": "1.0.0"
+    "description": "Major release – targeting 1.0.x branch (semantic version: 1.0.0)"
+    "state": "open"
