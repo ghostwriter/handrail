@@ -16,12 +16,6 @@
   "enable_automated_security_fixes": true
   "enable_vulnerability_alerts": true
 "milestones":
-  - "title": "0.0.2"
-    "description": "Patch release – targeting 0.0.x branch (semantic version: 0.0.2)"
-    "state": "closed"
-  - "title": "0.1.4"
-    "description": "Patch release – targeting 0.1.x branch (semantic version: 0.1.4)"
-    "state": "closed"
   - "title": "0.1.5"
     "description": "Patch release – targeting 0.1.x branch (semantic version: 0.1.5)"
     "state": "open"
@@ -31,3 +25,6 @@
   - "title": "1.0.0"
     "description": "Major release – targeting 1.0.x branch (semantic version: 1.0.0)"
     "state": "open"
+  - "title": "0.1.4"
+    "description": "Patch release – targeting 0.1.x branch (semantic version: 0.1.4)"
+    "state": "closed"
