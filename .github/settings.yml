@@ -3,7 +3,6 @@
   "description": "Safeguard PHP functions from redeclaration conflicts"
   "homepage": "https://github.com/ghostwriter/handrail"
   "topics": "composer, composer-plugin, conflicts, functions, ghostwriter, handrail, php, plugin, redeclaration, safeguard"
-  "private": false
   "has_issues": true
   "has_projects": false
   "has_wiki": false
