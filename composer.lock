@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b0c558a4456e210f1aef26c816808fa",
+    "content-hash": "07259c18b73219b04e8e31e83b1f6f3e",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -6970,7 +6970,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "~8.4.0",
+        "php": "~8.4.0 || ~8.5.0",
         "ext-tokenizer": "*",
         "composer-plugin-api": "^2.6.0",
         "composer-runtime-api": "^2.2.2"
