@@ -3152,12 +3152,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/workbench.git",
-                "reference": "c809f013335358f330dff9c9389951730bdff9df"
+                "reference": "095465474157088558948a1ea7176e1295a7e5a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/workbench/zipball/c809f013335358f330dff9c9389951730bdff9df",
-                "reference": "c809f013335358f330dff9c9389951730bdff9df",
+                "url": "https://api.github.com/repos/ghostwriter/workbench/zipball/095465474157088558948a1ea7176e1295a7e5a3",
+                "reference": "095465474157088558948a1ea7176e1295a7e5a3",
                 "shasum": ""
             },
             "require": {
@@ -3238,7 +3238,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-02T02:14:01+00:00"
+            "time": "2025-09-02T02:49:16+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
