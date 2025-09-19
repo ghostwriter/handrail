@@ -46,18 +46,18 @@
         "ext-tokenizer": "*",
         "composer-plugin-api": "~2.6.0",
         "composer-runtime-api": "~2.2.2",
-        "composer/composer": "^2.8.12",
-        "ghostwriter/container": "^5.0.1",
-        "ghostwriter/event-dispatcher": "^5.0.3",
-        "ghostwriter/filesystem": "^0.1.1",
-        "ghostwriter/json": "^3.0.0"
+        "composer/composer": "~2.8.12",
+        "ghostwriter/container": "~5.0.1",
+        "ghostwriter/event-dispatcher": "~5.0.3",
+        "ghostwriter/filesystem": "~0.1.1",
+        "ghostwriter/json": "~3.0.0"
     },
     "require-dev": {
         "ext-xdebug": "*",
         "ghostwriter/coding-standard": "dev-main",
-        "mockery/mockery": "^1.6.12",
-        "phpunit/phpunit": "^12.3.11",
-        "symfony/var-dumper": "^7.3.3"
+        "mockery/mockery": "~1.6.12",
+        "phpunit/phpunit": "~12.3.11",
+        "symfony/var-dumper": "~7.3.3"
     },
     "prefer-stable": true,
     "autoload": {
