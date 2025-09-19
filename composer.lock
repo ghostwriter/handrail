@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2bca95f235cae858b96ec13b7c30842",
+    "content-hash": "7ed762124282624e2f6886bbeb6dbb4a",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2627,18 +2627,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "463b29cecd941ff0292200aab185f5a9e369d54e"
+                "reference": "5a3b19053dc74511910d5f81bb41e8422c6842c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/463b29cecd941ff0292200aab185f5a9e369d54e",
-                "reference": "463b29cecd941ff0292200aab185f5a9e369d54e",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/5a3b19053dc74511910d5f81bb41e8422c6842c8",
+                "reference": "5a3b19053dc74511910d5f81bb41e8422c6842c8",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "~2.6.0",
                 "composer-runtime-api": "~2.2.2",
-                "composer/composer": "~2.8.11",
+                "composer/composer": "~2.8.12",
                 "composer/semver": "~3.4.4",
                 "ext-ctype": "*",
                 "ext-curl": "*",
@@ -2789,7 +2789,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-14T21:17:50+00:00"
+            "time": "2025-09-19T12:54:01+00:00"
         },
         {
             "name": "ghostwriter/config",
