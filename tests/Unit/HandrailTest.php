@@ -66,7 +66,7 @@ final class HandrailTest extends AbstractTestCase
      *
      * @return Generator<string,array{string,string}>
      */
-    public static function provideGuardCases(): Generator
+    public static function provideGuardCases(): iterable
     {
         yield from [
             'empty' => ['', ''],
