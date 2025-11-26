@@ -44,7 +44,7 @@
     "require": {
         "php": "~8.4.0 || ~8.5.0",
         "ext-tokenizer": "*",
-        "composer-plugin-api": "~2.6.0",
+        "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
         "composer/composer": "^2.9.1",
         "ghostwriter/container": "^5.0.1",
@@ -94,7 +94,11 @@
     },
     "extra": {
         "class": "Ghostwriter\\Handrail\\Plugin",
-        "plugin-optional": false
+        "plugin-optional": false,
+        "thanks": {
+            "url": "https://github.com/ghostwriter/handrail",
+            "name": "ghostwriter/handrail"
+        }
     },
     "scripts": {
         "cache:clear": "rm -rf ./.cache/*",
