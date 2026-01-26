@@ -70,6 +70,12 @@ final class HandrailCommand extends BaseCommand
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (! InstalledVersions::isInstalled(Handrail::PACKAGE_NAME)) {
+            $this->inputOutput->error(sprintf('Handrail (%s) is not installed.', Handrail::PACKAGE_NAME));
+
+            return 0;
+        }
+
         $this->inputOutput->title(
             sprintf(
                 'Handrail (%s) is safeguarding PHP functions from redeclaration conflicts.',
