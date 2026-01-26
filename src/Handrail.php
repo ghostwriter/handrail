@@ -21,19 +21,19 @@ use function sprintf;
 /** @see HandrailTest */
 final readonly class Handrail implements HandrailInterface
 {
-    public const string PACKAGE_NAME = 'ghostwriter/handrail';
-
-    public const string OPTION_FILES = 'files';
-
-    public const string OPTION_EXCLUDE = 'exclude';
-
-    public const string OPTION_INCLUDE = 'include';
+    public const string EXTRA = 'extra';
 
     public const string OPTION_DISABLE = 'disable';
 
+    public const string OPTION_EXCLUDE = 'exclude';
+
+    public const string OPTION_FILES = 'files';
+
+    public const string OPTION_INCLUDE = 'include';
+
     public const string OPTION_PACKAGES = 'packages';
 
-    public const string EXTRA = 'extra';
+    public const string PACKAGE_NAME = 'ghostwriter/handrail';
 
     public function __construct(
         private Paths $paths,

@@ -1,12 +1,8 @@
 # Handrail
 
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/handrail&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
 [![Automation](https://github.com/ghostwriter/handrail/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/handrail/actions/workflows/automation.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/handrail?color=8892bf)](https://www.php.net/supported-versions)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/handrail&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
-[![Code Coverage](https://codecov.io/gh/ghostwriter/handrail/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/handrail)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/handrail/coverage.svg)](https://shepherd.dev/github/ghostwriter/handrail)
-[![Psalm Level](https://shepherd.dev/github/ghostwriter/handrail/level.svg)](https://psalm.dev/docs/running_psalm/error_levels)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/handrail)](https://packagist.org/packages/ghostwriter/handrail)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/handrail?color=blue)](https://packagist.org/packages/ghostwriter/handrail)
 
 Safeguard your PHP code by wrapping function declarations in `if (!function_exists())` blocks.
