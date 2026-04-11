@@ -21,9 +21,7 @@ abstract class AbstractTestCase extends TestCase
 
     protected static ?string $temporaryDirectory;
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     #[Override]
     protected function setUp(): void
     {
@@ -47,21 +45,21 @@ abstract class AbstractTestCase extends TestCase
         return self::$filesystem ??= Filesystem::new();
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public static function fixturesDirectory(): string
     {
-        return self::filesystem()
-            ->parentDirectory(__DIR__) . DIRECTORY_SEPARATOR . 'Fixture';
+        return implode(DIRECTORY_SEPARATOR, [
+            self::filesystem()->parentDirectory(__DIR__),
+            'Fixture',
+            'Cases',
+        ]);
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public static function temporaryDirectory(): string
     {
-        return self::filesystem()
-            ->createTemporaryDirectory(mb_substr(mb_strrchr(static::class, '\\'), 1));
+        return self::filesystem()->createTemporaryDirectory(
+                mb_substr(mb_strrchr(static::class, '\\'), 1)
+            );
     }
 }
