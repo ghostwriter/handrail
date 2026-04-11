@@ -11,9 +11,7 @@ use Throwable;
 
 final readonly class OriginalFile implements OriginalFileInterface
 {
-    /**
-     * @param non-empty-string $path
-     */
+    /** @param non-empty-string $path */
     public function __construct(
         private PathInterface $path,
         private string $code,
@@ -25,9 +23,7 @@ final readonly class OriginalFile implements OriginalFileInterface
         return new self($path, $code);
     }
 
-    /**
-     * @return non-empty-string
-     */
+    /** @return non-empty-string */
     #[Override]
     public function __toString(): string
     {
@@ -40,9 +36,7 @@ final readonly class OriginalFile implements OriginalFileInterface
         return $this->code;
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     #[Override]
     public function modify(ModifierInterface $modifier): ModifiedFileInterface
     {

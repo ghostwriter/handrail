@@ -27,44 +27,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
     #[Override]
     public function modify(OriginalFileInterface $originalFile): ModifiedFileInterface
     {
-        return ModifiedFile::new(
-            $originalFile->path(),
-            $this->wrapFunctionsWithExistsCheck($originalFile->code()),
-        );
-    }
-
-    private function isFunctionExistsCheck(array $tokens, int $index): bool
-    {
-        $counter = count($tokens);
-        for ($i = $index; $i < $counter; ++$i) {
-            $token = $tokens[$i];
-
-            if (! $token instanceof PhpToken) {
-                throw new ShouldNotHappenException('Invalid token');
-            }
-
-            $text = $token->text;
-
-            if ('{' === $text) {
-                // If we reach an opening brace before finding function_exists, it's not a check
-                break;
-            }
-
-            if (T_STRING !== $token->id) {
-                continue;
-            }
-
-            if (mb_strtolower($text) === 'function_exists') {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function wrapFunctionsWithExistsCheck(string $content): string
-    {
-        $tokens = PhpToken::tokenize($content);
+        $tokens = PhpToken::tokenize($originalFile->code());
         $indent = str_repeat(' ', 4);
         $openIfBlock = false;
         $insideUseBlock = false;
@@ -139,7 +102,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
                     continue;
                 }
 
-                $output .= sprintf("if (!function_exists('%s')) {\n%s%s", $functionNameToken->text, $indent, $text);
+                $output .= sprintf("if (! function_exists('%s')) {\n%s%s", $functionNameToken->text, $indent, $text);
 
                 $openIfBlock = true;
                 $previousLine = $line;
@@ -191,6 +154,38 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             $openIfBlock = false;
         }
 
-        return $output;
+        return ModifiedFile::new(
+            $originalFile->path(),
+            $output,
+        );
+    }
+
+    private function isFunctionExistsCheck(array $tokens, int $index): bool
+    {
+        $counter = count($tokens);
+        for ($i = $index; $i < $counter; ++$i) {
+            $token = $tokens[$i];
+
+            if (! $token instanceof PhpToken) {
+                throw new ShouldNotHappenException('Invalid token');
+            }
+
+            $text = $token->text;
+
+            if ('{' === $text) {
+                // If we reach an opening brace before finding function_exists, it's not a check
+                break;
+            }
+
+            if (T_STRING !== $token->id) {
+                continue;
+            }
+
+            if (mb_strtolower($text) === 'function_exists') {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

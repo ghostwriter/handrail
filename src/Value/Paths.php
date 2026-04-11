@@ -14,9 +14,7 @@ use function array_map;
 
 final readonly class Paths
 {
-    /**
-     * @var WeakMap<PathInterface,FileInterface>
-     */
+    /** @var WeakMap<PathInterface,FileInterface> */
     private WeakMap $weakMap;
 
     public function __construct(
@@ -55,9 +53,7 @@ final readonly class Paths
         return $this->weakMap->offsetExists($path);
     }
 
-    /**
-     * @return array<string,FileInterface>
-     */
+    /** @return array<string,FileInterface> */
     public function toArray(): array
     {
         $all = [];
