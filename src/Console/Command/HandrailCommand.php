@@ -7,12 +7,14 @@ namespace Ghostwriter\Handrail\Console\Command;
 use Composer\Command\BaseCommand;
 use Composer\InstalledVersions;
 use Composer\Package\PackageInterface;
+use Composer\Repository\InstalledRepositoryInterface;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
 use Ghostwriter\Handrail\Console\InputOutput;
 use Ghostwriter\Handrail\Handrail;
 use Ghostwriter\Handrail\HandrailInterface;
 use Ghostwriter\Json\Interface\JsonInterface;
 use Override;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
@@ -29,9 +31,10 @@ use function sprintf;
 use function str_contains;
 use function str_ends_with;
 
+#[AsCommand(name: 'handrail', description: 'Safeguard PHP functions from redeclaration conflicts.')]
 final class HandrailCommand extends BaseCommand
 {
-    public const array DEFAULT_COMPOSER_EXTRA = [
+    private const array DEFAULT_COMPOSER_EXTRA = [
         Handrail::EXTRA => [
             Handrail::PACKAGE_NAME => [
                 Handrail::OPTION_DISABLE => false,
@@ -41,9 +44,7 @@ final class HandrailCommand extends BaseCommand
         ],
     ];
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function __construct(
         private readonly HandrailInterface $handrail,
         private readonly InputOutput $inputOutput,
@@ -53,20 +54,7 @@ final class HandrailCommand extends BaseCommand
         parent::__construct();
     }
 
-    /**
-     * @throws Throwable
-     */
-    #[Override]
-    protected function configure(): void
-    {
-        $this
-            ->setName('handrail')
-            ->setDescription('Safeguard PHP functions from redeclaration conflicts.');
-    }
-
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -78,8 +66,10 @@ final class HandrailCommand extends BaseCommand
 
         $this->inputOutput->title(
             sprintf(
-                'Handrail (%s) is safeguarding PHP functions from redeclaration conflicts.',
+                '%s (%s) %s',
+                mb_ucfirst($this->getName()),
                 InstalledVersions::getPrettyVersion(Handrail::PACKAGE_NAME),
+                $this->getDescription()
             )
         );
 
@@ -90,7 +80,6 @@ final class HandrailCommand extends BaseCommand
         $extra = $rootPackage->getExtra();
 
         if (! array_key_exists(Handrail::PACKAGE_NAME, $extra)) {
-            /** @var array{ghostwriter/handrail: array{disable: bool, files: list<string>, packages: list<string>}} $extra */
             $extra = self::DEFAULT_COMPOSER_EXTRA[Handrail::EXTRA];
         }
 
@@ -140,9 +129,9 @@ final class HandrailCommand extends BaseCommand
             return 1;
         }
 
-        $installedRepository = $composer
-            ->getRepositoryManager()
-            ->getLocalRepository();
+        $repositoryManager = $composer->getRepositoryManager();
+
+        $installedRepository = $repositoryManager->getLocalRepository();
 
         foreach ($packages as $name) {
             $package = $installedRepository->findPackage($name, '*');
@@ -165,7 +154,7 @@ final class HandrailCommand extends BaseCommand
             return 0;
         }
 
-        $workspace = $this->filesystem->currentWorkingDirectory() . DIRECTORY_SEPARATOR;
+        $workspace = mb_rtrim($this->filesystem->currentWorkingDirectory(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         foreach ($files as $file) {
             if (! is_string($file)) {

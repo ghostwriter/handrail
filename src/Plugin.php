@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Handrail;
 
+use Composer\Command\BaseCommand;
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
@@ -16,15 +17,17 @@ use Ghostwriter\Container\Container;
 use Ghostwriter\Container\Interface\ContainerInterface;
 use Ghostwriter\EventDispatcher\Interface\EventDispatcherInterface;
 use Ghostwriter\Handrail\Console\Command\HandrailCommand;
-use Ghostwriter\Handrail\Container\ServiceProvider;
-use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPostInstall;
-use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPostUpdate;
+use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPluginActivateEvent;
+use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPluginDeactivateEvent;
+use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPluginInstallEvent;
+use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPluginUninstallEvent;
+use Ghostwriter\Handrail\EventDispatcher\Event\ComposerPluginUpdateEvent;
 use Override;
 use Throwable;
 
 final readonly class Plugin implements Capable, CommandProvider, EventSubscriberInterface, PluginInterface
 {
-    public const array CAPABILITIES = [
+    private const array CAPABILITIES = [
         CommandProvider::class => self::class,
     ];
 
@@ -32,26 +35,20 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
 
     private EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function __construct()
     {
-        $container = Container::getInstance();
+        $this->container = Container::getInstance();
 
-        if (! $container->has(ServiceProvider::class)) {
-            $container->provide(ServiceProvider::class);
-        }
-
-        $this->container = $container;
         $this->eventDispatcher = $this->container->get(EventDispatcherInterface::class);
     }
 
-    /**
-     * Apply plugin modifications to Composer.
-     */
+    /** Apply plugin modifications to Composer. */
     #[Override]
-    public function activate(Composer $composer, IOInterface $io): void {}
+    public function activate(Composer $composer, IOInterface $io): void
+    {
+        $this->eventDispatcher->dispatch(new ComposerPluginActivateEvent($composer, $io));
+    }
 
     /**
      * Remove any hooks from Composer.
@@ -61,7 +58,10 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
      * so the old one can be deactivated and the new one activated.
      */
     #[Override]
-    public function deactivate(Composer $composer, IOInterface $io): void {}
+    public function deactivate(Composer $composer, IOInterface $io): void
+    {
+        $this->eventDispatcher->dispatch(new ComposerPluginDeactivateEvent($composer, $io));
+    }
 
     #[Override]
     public function getCapabilities()
@@ -70,30 +70,28 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
     }
 
     /**
+     * Retrieves an array of commands.
+     *
      * @throws Throwable
+     *
+     * @return BaseCommand[]
      */
     #[Override]
     public function getCommands()
     {
-        static $commands;
-
-        return $commands ??= [$this->container->get(HandrailCommand::class)];
+        return [$this->container->get(HandrailCommand::class)];
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function postInstall(Event $event): void
     {
-        $this->eventDispatcher->dispatch(new ComposerPostInstall($event));
+        $this->eventDispatcher->dispatch(new ComposerPluginInstallEvent($event));
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function postUpdate(Event $event): void
     {
-        $this->eventDispatcher->dispatch(new ComposerPostUpdate($event));
+        $this->eventDispatcher->dispatch(new ComposerPluginUpdateEvent($event));
     }
 
     /**
@@ -102,11 +100,12 @@ final readonly class Plugin implements Capable, CommandProvider, EventSubscriber
      * This will be called after deactivate.
      */
     #[Override]
-    public function uninstall(Composer $composer, IOInterface $io): void {}
+    public function uninstall(Composer $composer, IOInterface $io): void
+    {
+        $this->eventDispatcher->dispatch(new ComposerPluginUninstallEvent($composer, $io));
+    }
 
-    /**
-     * @return array<string,string> The event names to listen to
-     */
+    /** @return array<string,string> The event names to listen to */
     #[Override]
     public static function getSubscribedEvents()
     {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use Generator;
-use Ghostwriter\Handrail\Container\Factory\ListenerProviderFactory;
-use Ghostwriter\Handrail\Container\ServiceProvider;
+use Ghostwriter\Handrail\Container\HandrailDefinition;
+use Ghostwriter\Handrail\Container\ListenerProviderExtension;
 use Ghostwriter\Handrail\Exception\ShouldNotHappenException;
 use Ghostwriter\Handrail\Handrail;
 use Ghostwriter\Handrail\HandrailInterface;
@@ -27,17 +27,15 @@ use function is_a;
 
 #[CoversClass(FunctionDeclarationModifier::class)]
 #[CoversClass(Handrail::class)]
-#[CoversClass(ListenerProviderFactory::class)]
+#[CoversClass(HandrailDefinition::class)]
+#[CoversClass(ListenerProviderExtension::class)]
 #[CoversClass(ModifiedFile::class)]
 #[CoversClass(OriginalFile::class)]
 #[CoversClass(Path::class)]
 #[CoversClass(Paths::class)]
-#[CoversClass(ServiceProvider::class)]
 final class HandrailTest extends AbstractTestCase
 {
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     #[DataProvider('provideGuardCases')]
     public function testGuard(string $code, string $expected): void
     {
@@ -52,9 +50,7 @@ final class HandrailTest extends AbstractTestCase
         self::assertStringEqualsFile($temporaryFile, $expected);
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public function testImplementsInterface(): void
     {
         self::assertTrue(is_a(Handrail::class, HandrailInterface::class, true));

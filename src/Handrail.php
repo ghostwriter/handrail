@@ -7,7 +7,6 @@ namespace Ghostwriter\Handrail;
 use Ghostwriter\Container\Container;
 use Ghostwriter\EventDispatcher\Interface\EventDispatcherInterface;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
-use Ghostwriter\Handrail\Container\ServiceProvider;
 use Ghostwriter\Handrail\Exception\ShouldNotHappenException;
 use Ghostwriter\Handrail\Modifier\FunctionDeclarationModifier;
 use Ghostwriter\Handrail\Value\File\OriginalFileInterface;
@@ -34,6 +33,8 @@ final readonly class Handrail implements HandrailInterface
     public const string OPTION_PACKAGES = 'packages';
 
     public const string PACKAGE_NAME = 'ghostwriter/handrail';
+    public const string VENDOR = 'ghostwriter';
+    public const string PACKAGE = 'handrail';
 
     public function __construct(
         private Paths $paths,
@@ -42,18 +43,10 @@ final readonly class Handrail implements HandrailInterface
         private EventDispatcherInterface $eventDispatcher,
     ) {}
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     public static function new(): self
     {
-        $container = Container::getInstance();
-
-        if (! $container->has(ServiceProvider::class)) {
-            $container->provide(ServiceProvider::class);
-        }
-
-        return $container->get(self::class);
+        return Container::getInstance()->get(self::class);
     }
 
     /**

@@ -23,9 +23,7 @@ final readonly class ModifiedFile implements ModifiedFileInterface
         return new self($path, $code);
     }
 
-    /**
-     * @return non-empty-string
-     */
+    /** @return non-empty-string */
     #[Override]
     public function __toString(): string
     {
@@ -38,9 +36,7 @@ final readonly class ModifiedFile implements ModifiedFileInterface
         return $this->code;
     }
 
-    /**
-     * @throws Throwable
-     */
+    /** @throws Throwable */
     #[Override]
     public function modify(ModifierInterface $modifier): ModifiedFileInterface
     {
