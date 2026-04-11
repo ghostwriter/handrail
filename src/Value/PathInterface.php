@@ -8,8 +8,6 @@ use Stringable;
 
 interface PathInterface extends Stringable
 {
-    /**
-     * @param non-empty-string $path
-     */
+    /** @param non-empty-string $path */
     public static function new(string $path): self;
 }
