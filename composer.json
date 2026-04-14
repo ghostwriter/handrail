@@ -50,7 +50,7 @@
         "composer/composer": "^2.9.5",
         "ghostwriter/container": "^6.0.1",
         "ghostwriter/event-dispatcher": "^6.0.2",
-        "ghostwriter/filesystem": "^0.1.2",
+        "ghostwriter/filesystem": "^0.2.0",
         "ghostwriter/json": "^3.0.1"
     },
     "require-dev": {
