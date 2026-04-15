@@ -27,7 +27,7 @@ use function assert;
  */
 final readonly class ListenerProviderExtension implements ExtensionInterface
 {
-    private const array EVENTS = [
+    private const array EVENT_LISTENERS = [
         // 'object' => [DebugListener::class],
         ComposerPluginActivateEvent::class => [],
         ComposerPluginDeactivateEvent::class => [],
@@ -46,7 +46,7 @@ final readonly class ListenerProviderExtension implements ExtensionInterface
     {
         assert($service instanceof ListenerProvider);
 
-        foreach (self::EVENTS as $event => $listeners) {
+        foreach (self::EVENT_LISTENERS as $event => $listeners) {
             foreach ($listeners as $listener) {
                 $service->listen($event, $listener);
             }
