@@ -12,6 +12,7 @@ use Throwable;
 
 use const DIRECTORY_SEPARATOR;
 
+use function implode;
 use function mb_strrchr;
 use function mb_substr;
 
@@ -48,18 +49,12 @@ abstract class AbstractTestCase extends TestCase
     /** @throws Throwable */
     public static function fixturesDirectory(): string
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            self::filesystem()->parentDirectory(__DIR__),
-            'Fixture',
-            'Cases',
-        ]);
+        return implode(DIRECTORY_SEPARATOR, [self::filesystem()->parentDirectory(__DIR__), 'Fixture', 'Cases']);
     }
 
     /** @throws Throwable */
     public static function temporaryDirectory(): string
     {
-        return self::filesystem()->createTemporaryDirectory(
-                mb_substr(mb_strrchr(static::class, '\\'), 1)
-            );
+        return self::filesystem()->createTemporaryDirectory(mb_substr(mb_strrchr(static::class, '\\'), 1));
     }
 }

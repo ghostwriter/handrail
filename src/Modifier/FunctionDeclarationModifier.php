@@ -154,10 +154,7 @@ final readonly class FunctionDeclarationModifier implements ModifierInterface
             $openIfBlock = false;
         }
 
-        return ModifiedFile::new(
-            $originalFile->path(),
-            $output,
-        );
+        return ModifiedFile::new($originalFile->path(), $output);
     }
 
     private function isFunctionExistsCheck(array $tokens, int $index): bool
