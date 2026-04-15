@@ -48,7 +48,7 @@
         "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
         "composer/composer": "^2.9.7",
-        "ghostwriter/container": "^6.0.1",
+        "ghostwriter/container": "^6.1.1",
         "ghostwriter/event-dispatcher": "^6.1.0",
         "ghostwriter/filesystem": "^0.2.0",
         "ghostwriter/json": "^3.0.2"
@@ -57,7 +57,7 @@
         "ext-xdebug": "*",
         "ghostwriter/coding-standard": "dev-main",
         "mockery/mockery": "^1.6.12",
-        "phpunit/phpunit": "^13.1.1",
+        "phpunit/phpunit": "^13.1.4",
         "symfony/var-dumper": "^8.0.8"
     },
     "prefer-stable": true,
