@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use Generator;
-use Ghostwriter\Handrail\Container\HandrailDefinition;
+use Ghostwriter\Handrail\Container\HandrailProvider;
 use Ghostwriter\Handrail\Container\ListenerProviderExtension;
 use Ghostwriter\Handrail\Exception\ShouldNotHappenException;
 use Ghostwriter\Handrail\Handrail;
@@ -27,7 +27,7 @@ use function is_a;
 
 #[CoversClass(FunctionDeclarationModifier::class)]
 #[CoversClass(Handrail::class)]
-#[CoversClass(HandrailDefinition::class)]
+#[CoversClass(HandrailProvider::class)]
 #[CoversClass(ListenerProviderExtension::class)]
 #[CoversClass(ModifiedFile::class)]
 #[CoversClass(OriginalFile::class)]
