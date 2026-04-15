@@ -32,9 +32,11 @@ final readonly class Handrail implements HandrailInterface
 
     public const string OPTION_PACKAGES = 'packages';
 
-    public const string PACKAGE_NAME = 'ghostwriter/handrail';
-    public const string VENDOR = 'ghostwriter';
     public const string PACKAGE = 'handrail';
+
+    public const string PACKAGE_NAME = 'ghostwriter/handrail';
+
+    public const string VENDOR = 'ghostwriter';
 
     public function __construct(
         private Paths $paths,
