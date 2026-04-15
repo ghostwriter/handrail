@@ -50,7 +50,7 @@
         "composer/composer": "^2.9.7",
         "ghostwriter/container": "^6.0.1",
         "ghostwriter/event-dispatcher": "^6.1.0",
-        "ghostwriter/filesystem": "0.2.0",
+        "ghostwriter/filesystem": "^0.2.0",
         "ghostwriter/json": "^3.0.2"
     },
     "require-dev": {
@@ -97,8 +97,8 @@
         "class": "Ghostwriter\\Handrail\\Plugin",
         "plugin-optional": false,
         "ghostwriter":{
-            "container":{
-                "definition":"Ghostwriter\\Handrail\\Container\\HandrailDefinition"
+            "container": {
+                "provider": ["Ghostwriter\\Handrail\\Container\\HandrailProvider"]
             }
         },
         "thanks": {

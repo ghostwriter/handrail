@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Handrail\Value;
 
-use Ghostwriter\Filesystem\Filesystem;
 use Ghostwriter\Filesystem\Interface\FilesystemInterface;
 use Ghostwriter\Handrail\Value\File\OriginalFile;
 use Ghostwriter\Handrail\Value\File\OriginalFileInterface;
@@ -37,7 +36,7 @@ final readonly class Paths
             $filesystem,
             ...array_map(
                 static fn (string $path): OriginalFileInterface
-                    => OriginalFile::new(Path::new($path), Filesystem::new()->read($path)),
+                    => OriginalFile::new(Path::new($path), $filesystem->read($path)),
                 $files
             )
         );
