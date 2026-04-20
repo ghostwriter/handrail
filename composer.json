@@ -35,21 +35,16 @@
             "url": "https://github.com/sponsors/ghostwriter"
         }
     ],
-    "_comment": [
-        "#BlackLivesMatter",
-        "#FreePalestine",
-        "#StandWithUkraine",
-        "#StopGenocide"
-    ],
+    "_comment": ["#BlackLivesMatter", "#FreePalestine", "#StandWithIran", "#StandWithUkraine", "#StopGenocide"],
     "require": {
         "php": "~8.4.0 || ~8.5.0",
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
         "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
-        "composer/composer": "^2.9.7",
-        "ghostwriter/container": "^6.1.1",
-        "ghostwriter/event-dispatcher": "^6.1.0",
+        "composer/composer": "^2.10.0-RC1",
+        "ghostwriter/container": "^7.0.0",
+        "ghostwriter/event-dispatcher": "^6.1.1",
         "ghostwriter/filesystem": "^0.2.0",
         "ghostwriter/json": "^3.0.2"
     },
