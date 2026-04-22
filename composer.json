@@ -43,7 +43,7 @@
         "composer-plugin-api": "~2.9.0",
         "composer-runtime-api": "~2.2.2",
         "composer/composer": "^2.10.0-RC1",
-        "ghostwriter/container": "^7.0.0",
+        "ghostwriter/container": "^7.0.1",
         "ghostwriter/event-dispatcher": "^6.1.1",
         "ghostwriter/filesystem": "^0.2.0",
         "ghostwriter/json": "^3.0.2"
