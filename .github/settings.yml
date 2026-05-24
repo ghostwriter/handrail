@@ -32,17 +32,6 @@
 "repository":
   "name": "handrail"
   "description": "Safeguard PHP functions from redeclaration conflicts"
-  "topics":
-    - "ghostwriter"
-    - "handrail"
-    - "php"
-    - "composer"
-    - "plugin"
-    - "composer-plugin"
-    - "safeguard"
-    - "functions"
-    - "redeclaration"
-    - "conflicts"
   "homepage": "https://github.com/ghostwriter/handrail"
   "default_branch": "0.2.x"
   "allow_auto_merge": true
