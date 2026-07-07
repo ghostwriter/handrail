@@ -2801,16 +2801,16 @@
     "packages-dev": [
         {
             "name": "boundwize/jsonrecast",
-            "version": "0.2.20",
+            "version": "0.2.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/jsonrecast.git",
-                "reference": "612b02cb1f2615eff4451b1e31942cab3a11b566"
+                "reference": "8c23b5446ea852f167cb4aa56afb5750a25967b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/jsonrecast/zipball/612b02cb1f2615eff4451b1e31942cab3a11b566",
-                "reference": "612b02cb1f2615eff4451b1e31942cab3a11b566",
+                "url": "https://api.github.com/repos/boundwize/jsonrecast/zipball/8c23b5446ea852f167cb4aa56afb5750a25967b0",
+                "reference": "8c23b5446ea852f167cb4aa56afb5750a25967b0",
                 "shasum": ""
             },
             "require": {
@@ -2858,7 +2858,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/jsonrecast/issues",
-                "source": "https://github.com/boundwize/jsonrecast/tree/0.2.20"
+                "source": "https://github.com/boundwize/jsonrecast/tree/0.2.24"
             },
             "funding": [
                 {
@@ -2866,20 +2866,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-05T08:11:31+00:00"
+            "time": "2026-07-07T14:12:52+00:00"
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.14.10",
+            "version": "0.14.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "c2a5ef545eed7b181823139d68c707a47b089965"
+                "reference": "b0c102a2d95ce7686e82c3d3c2590ded9727909a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/c2a5ef545eed7b181823139d68c707a47b089965",
-                "reference": "c2a5ef545eed7b181823139d68c707a47b089965",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/b0c102a2d95ce7686e82c3d3c2590ded9727909a",
+                "reference": "b0c102a2d95ce7686e82c3d3c2590ded9727909a",
                 "shasum": ""
             },
             "require": {
@@ -2935,7 +2935,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.14.10"
+                "source": "https://github.com/boundwize/structarmed/tree/0.14.11"
             },
             "funding": [
                 {
@@ -2943,7 +2943,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-02T23:26:49+00:00"
+            "time": "2026-07-07T09:24:53+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
