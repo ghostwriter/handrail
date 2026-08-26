@@ -74,7 +74,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\Unit\\": "tests/Unit/"
         },
         "files": [
             "tests/bootstrap.php"
@@ -146,7 +146,7 @@
         ],
         "phpunit": [
             "@xdebug",
-            "phpunit --do-not-cache-result --colors=always"
+            "phpunit --colors=always"
         ],
         "test": [
             "@phpunit",
