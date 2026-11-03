@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b39cfe418dd22feff3a7370c9a00584f",
+    "content-hash": "da52c6c07d76b76e84bc248cb5f382ba",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -624,33 +624,33 @@
         },
         {
             "name": "ghostwriter/container",
-            "version": "7.0.2",
+            "version": "7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/container.git",
-                "reference": "a5474864d2a54074fef019646bf7ca060eb3638b"
+                "reference": "321259a7cce23e6fc0db72c360a86e20d8a37c70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/container/zipball/a5474864d2a54074fef019646bf7ca060eb3638b",
-                "reference": "a5474864d2a54074fef019646bf7ca060eb3638b",
+                "url": "https://api.github.com/repos/ghostwriter/container/zipball/321259a7cce23e6fc0db72c360a86e20d8a37c70",
+                "reference": "321259a7cce23e6fc0db72c360a86e20d8a37c70",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.4.0 || ~8.5.0",
+                "php": "~8.4.0 || ~8.5.0 || ~8.6.0",
                 "psr/container": "^2.0.2"
             },
             "provide": {
                 "psr/container-implementation": "*"
             },
             "require-dev": {
-                "boundwize/structarmed": "^0.7.12",
+                "boundwize/structarmed": "^0.18.9",
                 "ext-xdebug": "*",
                 "ghostwriter/coding-standard": "dev-main",
-                "ghostwriter/testify": "^0.1.1",
-                "mockery/mockery": "^1.6.12",
-                "phpunit/phpunit": "^13.1.12",
-                "symfony/var-dumper": "^8.0.8"
+                "ghostwriter/phpunit-assertions": "^0.1.1",
+                "ghostwriter/testify": "^0.1.2",
+                "mockery/mockery": "^1.6.15",
+                "phpunit/phpunit": "^13.3.6"
             },
             "type": "library",
             "extra": {
@@ -699,9 +699,13 @@
                 {
                     "url": "https://github.com/sponsors/ghostwriter",
                     "type": "github"
+                },
+                {
+                    "url": "https://paypal.me/codepoet",
+                    "type": "paypal"
                 }
             ],
-            "time": "2026-05-27T01:57:36+00:00"
+            "time": "2026-10-01T19:24:22+00:00"
         },
         {
             "name": "ghostwriter/event-dispatcher",
