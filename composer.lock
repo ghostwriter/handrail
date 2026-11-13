@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da9ae579336c71792366bfd9d9fac039",
+    "content-hash": "0c21fc605023d57e1ba56bd0053bf327",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2855,20 +2855,21 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-15T00:35:36+00:00"
+            "time": "2026-08-15T00:35:36+00:00",
+            "published-time": "2026-08-15T00:36:16+00:00"
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.21.8",
+            "version": "0.21.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "aceafaded72331ef1754b16f5dea34834f6be4a3"
+                "reference": "5d54650b3a69db7472329a8364ca7c5e8d1a43ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/aceafaded72331ef1754b16f5dea34834f6be4a3",
-                "reference": "aceafaded72331ef1754b16f5dea34834f6be4a3",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/5d54650b3a69db7472329a8364ca7c5e8d1a43ad",
+                "reference": "5d54650b3a69db7472329a8364ca7c5e8d1a43ad",
                 "shasum": ""
             },
             "require": {
@@ -2925,7 +2926,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.21.8"
+                "source": "https://github.com/boundwize/structarmed/tree/0.21.9"
             },
             "funding": [
                 {
@@ -2933,7 +2934,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-08T23:46:25+00:00"
+            "time": "2026-11-12T22:22:26+00:00",
+            "published-time": "2026-11-12T22:23:03+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
@@ -2995,7 +2997,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-29T22:11:39+00:00"
+            "time": "2026-09-29T22:11:39+00:00",
+            "published-time": "2026-09-29T22:12:43+00:00"
         },
         {
             "name": "ghostwriter/coding-standard",
@@ -3475,7 +3478,8 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.9.0"
             },
-            "time": "2026-09-13T18:51:52+00:00"
+            "time": "2026-09-13T18:51:52+00:00",
+            "published-time": "2026-09-13T18:53:16+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -5248,5 +5252,5 @@
     "platform-overrides": {
         "php": "8.4.999"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
